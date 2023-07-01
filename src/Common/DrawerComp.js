@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
-import pages from "./Data/Pages.json";
+import pages from "../Data/Pages.json";
 import { ListItemButton } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";

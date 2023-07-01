@@ -13,7 +13,7 @@ import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
 import { NavLink, useLocation } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import DrawerComp from "./DrawerComp";
-import pages from "./Data/Pages.json";
+import pages from "../Data/Pages.json";
 
 // Barra de estilo personalizada para opciones de secciones
 const StyledTabs = styled((props) => (
