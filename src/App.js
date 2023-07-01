@@ -3,7 +3,7 @@ import './App.css';
 function App() {
   return (
     <div>
-      <p>AAAAAAAAAAAAAAAA</p>
+      <h1>Celulas de Seguridad</h1>
     </div>
   );
 }
