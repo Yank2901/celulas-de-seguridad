@@ -1,11 +1,11 @@
 import { React, Fragment } from "react";
 
-const Steps = () => {
+const MyCells = () => {
   return (
     <Fragment>
-      <h2>Steps</h2>
+      <h1>Cooming Soon</h1>
     </Fragment>
   );
 };
 
-export default Steps;
+export default MyCells;
