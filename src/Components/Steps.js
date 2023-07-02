@@ -1,10 +1,12 @@
-import { React, Fragment } from "react";
+import { React} from "react";
 
-const Steps = () => {
+const Steps = (props) => {
   return (
-    <Fragment>
-      <h2>Steps</h2>
-    </Fragment>
+    <div style={{flex:'1', margin:'1%', padding:'2%'}}>
+        <img src={props.imagen} style={{width: "125px", height: "125px"}} alt="foto_"/>
+        <h3>{props.titulo}</h3>
+        <h4>{props.texto}</h4>
+    </div>
   );
 };
 
