@@ -102,7 +102,7 @@ const Header = () => {
   }, [location]);
 
   // Cambio de seccion entonces cambio el valor para el enfasis en el titulo
-  const handleChange = (e, val) => {
+  const handleChange = (val) => {
     setValue(val);
   };
 
