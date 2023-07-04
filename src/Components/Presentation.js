@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Box, Button } from '@mui/material';
-import LoginIcon from '@mui/icons-material/Login';
+import imgpresentation from '../Images/imgpresentation.jpg';
 import { useNavigate } from "react-router-dom";
 
 const Presentation = () => {
@@ -8,7 +8,7 @@ let navigate = useNavigate();
   return (
     <Box display="flex" flexDirection="row">
       <Box>
-        <Typography variant="h2"padding={10} >
+        <Typography variant="h2"padding={10} fontWeight="bolder">
           Security Cells
         </Typography>
         <Typography variant="body1" padding={10} >
@@ -27,7 +27,12 @@ let navigate = useNavigate();
 
       </Box>
       <Box padding={10}>
-        <LoginIcon sx={{ width:"200px",height:"400px" }}></LoginIcon>
+      <img
+          src={imgpresentation}
+          style={{
+            width:'100%',
+            height:'auto',
+          }} alt="Imagen presentación"/>
 
       </Box>
     </Box>

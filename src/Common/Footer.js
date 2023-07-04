@@ -36,7 +36,7 @@ const Footer = () => {
            color: "#FFF",
            marginLeft: "5px",
          }} 
-      >Integrantes: Yannick De La Torre, Joel del Hierrro, Alejandra Escobar.</Typography>
+      >Integrantes: Yanick de la Torre, Joel del Hierrro, Alejandra Escobar.</Typography>
       </Box>
       <Box>
       <Button href='/'><HomeIcon sx={{ fontSize: "15px", color: "#FFF" }} /></Button> 
