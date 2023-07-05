@@ -6,10 +6,8 @@ const Home = () => {
   return (
     <Fragment>
       <Presentation></Presentation>
-      <Comment></Comment>
       <Steps></Steps>
-
-
+      <Comment></Comment>
     </Fragment>
   );
 };
