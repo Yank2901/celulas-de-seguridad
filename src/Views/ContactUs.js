@@ -2,13 +2,13 @@ import { Box, Typography } from "@mui/material";
 import { React, Fragment } from "react";
 import EngineeringIcon from '@mui/icons-material/Engineering';
 
-const MyCells = () => {
+const AboutUs = () => {
   return (
     <Fragment>
       <Box
         sx={{
           borderRadius: '20px',
-          backgroundColor: '#D6B1FF',
+          backgroundColor: '#75E3EA',
           width: '100%', // Agregar esta línea para ocupar todo el espacio disponible verticalmente
           display: 'flex',
           flexDirection: 'column',
@@ -59,4 +59,4 @@ const MyCells = () => {
   );
 };
 
-export default MyCells;
+export default AboutUs;

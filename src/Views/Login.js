@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import users from "../Data/Users.json";
 import { Box, TextField, Typography, Button, Checkbox } from "@mui/material";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
@@ -26,13 +26,12 @@ const LoginButton = styled(Button)(() => ({
   height: "40px", // Alto fijo
 }));
 
-const Login = () => {
+const Login = ({ setIsLoggedIn, setUserData }) => {
   const [errorId, setErrorId] = useState(false);
   const [id, setId] = useState("");
   const [errorPass, setErrorPass] = useState(false);
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [cookieLoaded, setCookieLoaded] = useState(false);
 
   const handleIdChange = (event) => {
     const value = event.target.value;
@@ -48,24 +47,21 @@ const Login = () => {
     setErrorPass(!isValid);
   };
 
-  const handleFocus = (event) => {
-    setId("");
-  };
-
   const handleCheckboxChange = (event) => {
     setRememberMe(event.target.checked);
   };
 
   const handleLogin = () => {
     const user = users.find((user) => user.id === id && user.password === password);
-    if (errorId || id==""){
+    if (errorId || user.id===""){
       alert("Por favor ingrese un numero de cedula para iniciar sesión.")
-    } else if (errorPass || password==""){
+    } else if (errorPass || user.password===""){
       alert("Por favor ingrese la contraseña de la cuenta.")
     } else if (user) {
-      const message = `Se ha iniciado sesión\n\nid: ${id}\nPassword: ${password}`;
+      const message = `Se ha iniciado sesión\n\nid: ${user.id}\nPassword: ${user.password}`;
+      setIsLoggedIn(true);
+      setUserData(user);
       alert(message);
-
       if (rememberMe) {
         localStorage.setItem("rememberedUser", JSON.stringify({ id, password }));
       } else {
@@ -78,19 +74,19 @@ const Login = () => {
 
   useEffect(() => {
     const rememberedUser = localStorage.getItem("rememberedUser");
-    if (rememberedUser && !cookieLoaded) {
+    if (rememberedUser) {
       const { id, password } = JSON.parse(rememberedUser);
       setId(id);
       setPassword(password);
       setRememberMe(true);
-      setCookieLoaded(true);
     }
-  }, [cookieLoaded]);
+  }, []);
 
   return (
     <Box
       sx={{
         display: "flex",
+        flex: '1',
         flexDirection: "row",
         alignItems: "center",
       }}
@@ -132,11 +128,9 @@ const Login = () => {
           error={errorId}
           id="outlined-error-helper-text"
           label="Cedula de Identidad"
-          disabled={!cookieLoaded}
           helperText={errorId ? 'Número de cedula de identidad inválido.' : ''}
           required
           onBlurCapture={handleIdChange}
-          onFocus={handleFocus}
           variant="outlined"
           sx={{
             margin: '10px 0px',
@@ -148,12 +142,10 @@ const Login = () => {
           fullWidth
           error={errorPass}
           id="outlined-error-helper-text"
-          disabled={!cookieLoaded}
           label="Contraseña"
           helperText={errorPass ? 'Contraseña inválida.' : ''} 
           required
           onBlurCapture={handlePasswordChange}
-          onFocus={handleFocus}
           sx={{
             margin: "10px 0px",
           }}
@@ -218,6 +210,7 @@ const Login = () => {
         }}
       >
         <img
+          alt="login"
           src={LoginImage}
           loading="lazy"
           style={{

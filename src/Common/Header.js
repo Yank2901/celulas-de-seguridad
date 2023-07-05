@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   AppBar,
+  Avatar,
   Button,
   Tab,
   Tabs,
@@ -74,7 +75,7 @@ const SingUpButton = styled(Button)(() => ({
   },
 }));
 
-const Header = () => {
+const Header = ({ isLoggedIn, userData }) => {
   const [value, setValue] = useState(0); // Índice o valor para seleccionar la sección
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
@@ -104,6 +105,10 @@ const Header = () => {
   // Cambio de seccion entonces cambio el valor para el enfasis en el titulo
   const handleChange = (val) => {
     setValue(val);
+  };
+
+  const clearTabSelection = () => {
+    setValue(-1);
   };
 
   return (
@@ -139,22 +144,36 @@ const Header = () => {
                 />
               ))}
             </StyledTabs>
-            <LoginButton
-              variant="contained"
-              sx={{ marginLeft: "auto" }}
-              component={NavLink}
-              to={'/login'}
-            >
-              LOG IN
-            </LoginButton>
-            <SingUpButton 
-              variant="contained" 
-              sx={{ marginLeft: "10px" }}
-              component={NavLink}
-              to={'/register'}
-            >
-              REGISTER
-            </SingUpButton>
+            {
+              isLoggedIn ? (
+                <Avatar 
+                  sx={{ marginLeft: "auto", bgcolor: '#F22BB2' }} 
+                  alt={userData.name + userData.lastName}
+                  src="/static/images/avatar/1.jpg" 
+                />
+              ) : (
+                <div>
+                  <LoginButton
+                    variant="contained"
+                    sx={{ marginLeft: "auto" }}
+                    component={NavLink}
+                    to={'/login'}
+                    onClick={clearTabSelection} 
+                  >
+                    LOG IN
+                  </LoginButton>
+                  <SingUpButton 
+                    variant="contained" 
+                    sx={{ marginLeft: "10px" }}
+                    component={NavLink}
+                    to={'/register'}
+                    onClick={clearTabSelection} 
+                  >
+                    REGISTER
+                  </SingUpButton>
+                </div>
+              )
+            }
           </>
         )}
       </Toolbar>

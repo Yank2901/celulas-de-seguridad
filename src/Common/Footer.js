@@ -12,6 +12,7 @@ const FooterContainer = styled('footer')(({ theme }) => ({
   marginTop: 'auto',
   backgroundColor: "#07090A",
   color: theme.palette.primary.contrastText,
+  maxWidth: '100%'
 }));
 
 const Footer = () => {
