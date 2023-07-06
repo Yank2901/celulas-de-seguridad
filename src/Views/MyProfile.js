@@ -1,60 +1,146 @@
-import { Box, Typography } from "@mui/material";
+import { Typography, Divider, Chip } from "@mui/material";
 import { React, Fragment } from "react";
-import EngineeringIcon from '@mui/icons-material/Engineering';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-const MyProfile = () => {
+const MyProfile = (props) => {
   return (
     <Fragment>
-      <Box
-        sx={{
-          borderRadius: '20px',
-          backgroundColor: '#C1E5C0',
-          width: '100%', // Agregar esta línea para ocupar todo el espacio disponible verticalmente
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flex:'1',
+      <div
+        style={{
+          borderRadius: "20px",
+          backgroundColor: "#A0DCFF",
+          width: "50%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          flex: "1",
+          margin: "auto",
+          textAlign: "center",
+          padding: "20px",
         }}
-        noValidate
-        autoComplete="on"
       >
-        <Typography
-          variant="h2" 
-          gutterBottom
-          sx={{
-            color: 'var(--text-gray-900, #18191F)',
-            fontSize: '30px',
-            fontFamily: 'Inter',
-            fontStyle: 'normal',
-            fontWeight: '800',
-            lineHeight: '54px',
-          }}
-        >
-          ESTAMOS EN CONSTRUCCION
-        </Typography>
-        <Typography
-          variant="h1" 
-          gutterBottom
-          sx={{
-            color: 'var(--text-gray-900, #18191F)',
-            fontSize: '70px',
-            fontFamily: 'Inter',
-            fontStyle: 'normal',
-            fontWeight: '800',
-            lineHeight: '94px',
-          }}
-        >
-          PROXIMAMENTE
-        </Typography>
-        <EngineeringIcon
-          sx={{
-            color: 'var(--text-gray-900, #18191F)',
-            width: '20%',
-            height: 'auto',
+        <AccountCircleIcon
+          style={{
+            color: "var(--text-gray-900, #3C64C8)",
+            width: "20%",
+            height: "auto",
+            marginBottom: "20px",
           }}
         />
-      </Box>
+        <Divider>
+          <Chip label="INFORMACIÓN DE CONTACTO" />
+        </Divider>
+        <Typography
+          variant="h5"
+          gutterBottom
+          component="div"
+          style={{
+            color: "var(--text-gray-900, #18191F)",
+            fontFamily: "Inter",
+            fontStyle: "normal",
+            fontWeight: "800",
+            lineHeight: "2", // Ajustar el valor de lineHeight
+            marginBottom: "10px", // Agregar margen inferior
+          }}
+        >
+          Nombre:
+          <Typography
+            variant="h5"
+            component="span"
+            style={{
+              fontWeight: "normal",
+              marginLeft: "5px",
+            }}
+          >
+            {props.userData.name} {props.userData.lastName}
+          </Typography>
+        </Typography>
+        <Typography
+          variant="h5"
+          gutterBottom
+          component="div"
+          style={{
+            color: "var(--text-gray-900, #18191F)",
+            fontFamily: "Inter",
+            fontStyle: "normal",
+            fontWeight: "800",
+            lineHeight: "2", // Ajustar el valor de lineHeight
+            marginBottom: "10px", // Agregar margen inferior
+          }}
+        >
+          Cédula:
+          <Typography
+            variant="h5"
+            component="span"
+            style={{
+              fontWeight: "normal",
+              marginLeft: "5px",
+            }}
+          >
+            {props.userData.id}
+          </Typography>
+        </Typography>
+        <Typography
+          variant="h5"
+          gutterBottom
+          component="div"
+          style={{
+            color: "var(--text-gray-900, #18191F)",
+            fontFamily: "Inter",
+            fontStyle: "normal",
+            fontWeight: "800",
+            lineHeight: "2", // Ajustar el valor de lineHeight
+            marginBottom: "10px", // Agregar margen inferior
+          }}
+        >
+          Correo Electrónico:
+          <Typography
+            variant="h5"
+            component="span"
+            style={{
+              fontWeight: "normal",
+              marginLeft: "5px",
+            }}
+          >
+            {props.userData.email}
+          </Typography>
+        </Typography>
+
+        <Divider>
+          <Chip label="INFORMACIÓN DE CONTACTO" />
+        </Divider>
+        {props.userData.homeDirections.map((home) => (
+          <div>
+            <Typography
+              variant="h5"
+              gutterBottom
+              component="div"
+              style={{
+                color: "var(--text-gray-900, #18191F)",
+                fontFamily: "Inter",
+                fontStyle: "normal",
+                fontWeight: "800",
+                lineHeight: "2", // Ajustar el valor de lineHeight
+                marginBottom: "10px", // Agregar margen inferior
+              }}
+            >
+              Dirección:
+              <Typography
+                variant="h5"
+                component="span"
+                style={{
+                  fontWeight: "normal",
+                  marginLeft: "5px",
+                }}
+              >
+                {home.province}, {home.city}, {home.neighborhood},{" "}
+                {home.address}
+              </Typography>
+            </Typography>
+          </div>
+        ))}
+      </div>
     </Fragment>
   );
 };

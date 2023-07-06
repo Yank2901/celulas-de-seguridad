@@ -55,7 +55,7 @@ function App() {
       }
     }
   }, []);
-  
+  console.log(userData)
   return (
     <Router>
       <div className="app-container">
@@ -67,7 +67,7 @@ function App() {
             <Route path="/find-cells" element={<FindCells />} />
             <Route path="/my-cells" element={<MyCells />} />
             <Route path="/register" element={<Register addNewUser={addNewUser} />} />
-            <Route path="/my-profile" element={<MyProfile />} />
+            <Route path="/my-profile" element={<MyProfile userData={userData}/>} />
             <Route path="/" element={<Home />} />
           </Routes>
         </div>
