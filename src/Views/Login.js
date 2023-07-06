@@ -55,8 +55,6 @@ const Login = (props) => {
 
   const handleLogin = () => {
     const user = props.userList.find((user) => user.id === id && user.password === password);
-    console.log('Este es el usuario:')
-    console.log(user)
     if (errorId || !user || user.id === "") {
       alert("Por favor ingrese un número de cédula válido para iniciar sesión.");
     } else if (errorPass || user.password === "") {

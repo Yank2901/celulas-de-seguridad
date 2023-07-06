@@ -162,8 +162,7 @@ const Login = (props) => {
         ]
       };
       props.addNewUser(newUser);
-      console.log(newUser)
-      navigate('/')
+      navigate('/');
     } else {
       alert('Por favor ingrese todos los campos necesarios para el registro.');
     }
