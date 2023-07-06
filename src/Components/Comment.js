@@ -54,7 +54,7 @@ export default function Comment() {
               Diseño intuitivo
             </Typography>
             <Typography variant="body1" color="black" margin={3}>
-              Para iniciar sesión, buscar células o acceder a mis células lo puedo realizar en la parte superior de la pestaña, se puede visalizar fácilmente estas opciones de menú.
+              Para iniciar sesión, buscar células o acceder a mis células lo puedo realizar en la parte superior de la pestaña, se puede visualizar fácilmente estas opciones de menú.
             </Typography>
             <FaceIcon sx={{ fontSize: "50px", color: "#1e90ff" }}></FaceIcon>
             <Typography variant="body1" color="black">
@@ -80,7 +80,7 @@ export default function Comment() {
               Fácil de utilizar
             </Typography>
             <Typography variant="body1" color="black" margin={3}>
-              Puedo acceder a información de mis células sólo con haber iniciado sesión.
+              Puedo acceder al chat de mis célula en una sola página y publicar mensajes como en cualquier aplicación de mensajería.
             </Typography>
             <Face2Icon sx={{ fontSize: "50px", color: "#1e90ff" }}></Face2Icon>
             <Typography variant="body1" color="black">
