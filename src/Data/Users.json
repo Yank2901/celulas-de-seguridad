@@ -25,7 +25,7 @@
         "name": "Joel",
         "lastName": "DelHierro",
         "email": "joel.delhierro@epn.edu.ec",
-        "password": "Password2",
+        "password": "Password:2",
         "homeDirections": [
             {
                 "province": "Pichincha",
@@ -36,7 +36,7 @@
         ]
     },
     {
-        "id": "1454450672",
+        "id": "0450194246",
         "name": "Alejandra",
         "lastName": "Escobar",
         "email": "consuelo.escobar@epn.edu.ec",

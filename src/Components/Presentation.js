@@ -36,7 +36,7 @@ const Presentation = () => {
             },
           }}
         >
-          Inicio sesión
+          Comenzar
         </Button>
       </Box>
       <Box padding={10}>

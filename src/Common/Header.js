@@ -112,18 +112,22 @@ const Header = (props) => {
     setValue(val);
   };
 
+  // Borrar el enfasis de la navegacion al entrar a login, registro o mi perfil
   const clearTabSelection = () => {
     setValue(-1);
   };
 
+  // mostrar menu del avatar
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  // ocultar menu avatar
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
+  // mostrar mi perfil al dar click en el menu del avatar
   const handleProfile = () => {
     navigate("/my-profile");
     clearTabSelection();

@@ -17,13 +17,13 @@ function App() {
   const [userData, setUserData] = useState();
   const userList = users;
 
+  // Guardar datos de usuario cuando se realiza login
   const getData = (user) =>{
     setIsLoggedIn(true);
     setUserData(user);
-    console.log('estado actualizado')
-    console.log(user);
   }
 
+  // Borrar datos de estado cuando el usuario cierra sesion y en base a si queria recordar o no sus datos para un proximo login borro el coockie rememberedUser
   const closeSession = () => {
     const remember = localStorage.getItem('remember');
     if(remember==="true") {
@@ -38,8 +38,8 @@ function App() {
     }
   }
 
+  // Agregar un nuevo usuario pasado por el formulario de registro a la lista
   const addNewUser = (newUser) => {
-    console.log(newUser);
     userList.push(newUser);
   }
 
@@ -55,18 +55,34 @@ function App() {
       }
     }
   }, []);
-  console.log(userData)
+  
   return (
     <Router>
       <div className="app-container">
+        {/* 
+        Es el header donde se mostraran las secciones para navegar dentro de la pagina,
+        - Se envia el isLoggedIn para mostrar o no los botones de inicio de sesion y registro o en caso contrario el de avatar
+        - Se envia el usuario logueado para usar el componente Avatar de Material UI
+        - Se envia el closeSession para ser usado como evento de cierre de sesion
+        */}
         <Header isLoggedIn={isLoggedIn} userData={userData} closeSession={closeSession}/>
         <div className="content-container">
           <Routes>
             <Route path="/contact-us" element={<ContactUs />} />
+            {/* 
+              - Se envia el metodo getData para tomar la informacion del usuario logueado
+              - se envia el userlist para buscar las credenciales de loggin ingresadas
+            */}
             <Route path="/login" element={<Login getData={getData} userList={userList} />} />
             <Route path="/find-cells" element={<FindCells />} />
             <Route path="/my-cells" element={<MyCells />} />
+            {/* 
+              - Se envia el metodo addNewUser para agregar un usuario luego del registro
+            */}
             <Route path="/register" element={<Register addNewUser={addNewUser} />} />
+            {/* 
+              - Se envia el userData para mostrar la informacion en la vista Mi perfil
+            */}
             <Route path="/my-profile" element={<MyProfile userData={userData}/>} />
             <Route path="/" element={<Home />} />
           </Routes>
