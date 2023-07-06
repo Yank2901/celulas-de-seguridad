@@ -16,13 +16,27 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 const drawerWidth = 240;
 
-const DrawerComp = () => {
+const DrawerComp = (props) => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const handleDrawerClose = () => {
     setOpenDrawer(false);
   };
+  /*
+  const handlerCloseSesion = () => {
+    const needRemember = localStorage.getItem("remember");
 
+    if (needRemember==="true") {
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem('remember');
+    } else {
+      localStorage.removeItem("rememberedUser");
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem('remember');
+    }
+    setOpenDrawer(false);
+  };
+  */
   return (
     <React.Fragment>
       <Drawer
@@ -36,7 +50,7 @@ const DrawerComp = () => {
         variant="persistent"
         anchor="right"
         open={openDrawer}
-        onClose={() => setOpenDrawer(false)}
+        onClose={handleDrawerClose}
       >
         <div>
           <IconButton onClick={handleDrawerClose}>
@@ -50,7 +64,7 @@ const DrawerComp = () => {
               key={index}
               component={NavLink}
               to={page.path}
-              onClick={() => setOpenDrawer(false)}
+              onClick={handleDrawerClose}
             >
               <ListItemButton>
                 <ListItemText primary={page.title} />
@@ -59,28 +73,58 @@ const DrawerComp = () => {
           ))}
         </List>
         <Divider />
-        <List>
-          <ListItem
-            key="login"
-            component={NavLink}
-            to={'/login'}
-            onClick={() => setOpenDrawer(false)}
-          >
-            <ListItemButton>
-              <ListItemText primary={"LOG IN"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            key="register"
-            component={NavLink}
-            to={'/register'}
-            onClick={() => setOpenDrawer(false)}
-          >
-            <ListItemButton>
-              <ListItemText primary={"REGISTER"} />
-            </ListItemButton>
-          </ListItem>
-        </List>
+        {props.isLoggedIn ? (
+          <>
+            <List>
+              <ListItem
+                key="myprofile"
+                component={NavLink}
+                to={"/"}
+                onClick={() => setOpenDrawer(false)}
+              >
+                <ListItemButton>
+                  <ListItemText primary={"MI PERFIL"} />
+                </ListItemButton>
+              </ListItem>
+            </List>
+            <Divider />
+            <List>
+              <ListItem
+                key="logOut"
+                component={NavLink}
+                to={"/"}
+                onClick={handleDrawerClose}
+              >
+                <ListItemButton>
+                  <ListItemText primary={"CERRAR SESIÓN"} />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </>
+        ) : (
+          <List>
+            <ListItem
+              key="login"
+              component={NavLink}
+              to={"/login"}
+              onClick={handleDrawerClose}
+            >
+              <ListItemButton>
+                <ListItemText primary={"INICIAR SESIÓN"} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem
+              key="register"
+              component={NavLink}
+              to={"/register"}
+              onClick={handleDrawerClose}
+            >
+              <ListItemButton>
+                <ListItemText primary={"REGISTRATE"} />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        )}
       </Drawer>
 
       <IconButton

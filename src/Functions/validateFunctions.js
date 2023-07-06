@@ -73,3 +73,51 @@ export function validatePassword (password) {
     return true;
   }
   
+  export function validateName(name) {
+    // Verificar que el nombre no esté vacío
+    if (name.trim() === '') {
+      return false;
+    }
+  
+    // Verificar que el nombre no contenga caracteres especiales o números
+    if (!/^[a-zA-Z\s]+$/.test(name)) {
+      return false;
+    }
+  
+    // Si todos los criterios son cumplidos, el nombre es válido
+    return true;
+  }
+
+  export function validateLastName(lastName) {
+    // Verificar que el apellido no esté vacío
+    if (lastName.trim() === '') {
+      return false;
+    }
+  
+    // Verificar que el apellido no contenga caracteres especiales o números, excepto espacios en blanco
+    if (!/^[a-zA-Z\s]+$/.test(lastName)) {
+      return false;
+    }
+  
+    // Si todos los criterios son cumplidos, el apellido es válido
+    return true;
+  }
+  
+  export function validateEmail(email) {
+    // Verificar que el correo electrónico no esté vacío
+    if (email.trim() === '') {
+      return false;
+    }
+  
+    // Expresión regular para validar el formato del correo electrónico
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+    // Verificar si el correo electrónico cumple con el formato válido
+    if (!emailRegex.test(email)) {
+      return false;
+    }
+  
+    // Si todos los criterios son cumplidos, el correo electrónico es válido
+    return true;
+  }
+  

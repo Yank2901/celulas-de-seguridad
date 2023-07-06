@@ -3,6 +3,9 @@ import {
   AppBar,
   Avatar,
   Button,
+  IconButton,
+  Menu,
+  MenuItem,
   Tab,
   Tabs,
   Toolbar,
@@ -11,7 +14,7 @@ import {
   useTheme,
 } from "@mui/material";
 import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import DrawerComp from "./DrawerComp";
 import pages from "../Data/Pages.json";
@@ -75,11 +78,13 @@ const SingUpButton = styled(Button)(() => ({
   },
 }));
 
-const Header = ({ isLoggedIn, userData }) => {
+const Header = (props) => {
   const [value, setValue] = useState(0); // Índice o valor para seleccionar la sección
+  const [anchorEl, setAnchorEl] = useState(null);
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Almacenar el valor de la pestaña seleccionada en localStorage
@@ -111,6 +116,28 @@ const Header = ({ isLoggedIn, userData }) => {
     setValue(-1);
   };
 
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleProfile = () => {
+    navigate("/my-profile");
+    clearTabSelection();
+    handleMenuClose();
+  };
+
+  // Manejador para la opción "Cerrar sesión"
+  const handleLogout = () => {
+    navigate("/");
+    props.closeSession();
+    clearTabSelection();
+    handleMenuClose();
+  };
+
   return (
     <AppBar sx={{ backgroundColor: "#fff" }}>
       <Toolbar>
@@ -126,14 +153,14 @@ const Header = ({ isLoggedIn, userData }) => {
           SECURITY CELLS
         </Typography>
         {isMatch ? (
-          <DrawerComp />
+          <DrawerComp isLoggedIn={props.isLoggedIn} />
         ) : (
           <>
             <StyledTabs
               textColor="inherit"
               value={value}
               onChange={handleChange}
-              sx={{ marginLeft: "auto", color: "#000" }}
+              sx={{ marginLeft: "auto", marginRight: "auto", color: "#000" }}
             >
               {pages.map((page, index) => (
                 <StyledTab
@@ -144,36 +171,64 @@ const Header = ({ isLoggedIn, userData }) => {
                 />
               ))}
             </StyledTabs>
-            {
-              isLoggedIn ? (
-                <Avatar 
-                  sx={{ marginLeft: "auto", bgcolor: '#F22BB2' }} 
-                  alt={userData.name + userData.lastName}
-                  src="/static/images/avatar/1.jpg" 
-                />
-              ) : (
-                <div>
-                  <LoginButton
-                    variant="contained"
-                    sx={{ marginLeft: "auto" }}
-                    component={NavLink}
-                    to={'/login'}
-                    onClick={clearTabSelection} 
-                  >
-                    LOG IN
-                  </LoginButton>
-                  <SingUpButton 
-                    variant="contained" 
-                    sx={{ marginLeft: "10px" }}
-                    component={NavLink}
-                    to={'/register'}
-                    onClick={clearTabSelection} 
-                  >
-                    REGISTER
-                  </SingUpButton>
-                </div>
-              )
-            }
+            {props.isLoggedIn ? (
+              <div>
+                <IconButton
+                  size="small"
+                  onClick={handleMenuOpen}
+                  sx={{ marginLeft: "auto" }}
+                >
+                  <Avatar
+                    sx={{
+                      bgcolor: "#8C30F5",
+                      "&:hover": {
+                        transform: "scale(1.1)",
+                      },
+                    }}
+                    alt={props.userData.name + props.userData.lastName}
+                    src="/static/images/avatar/1.jpg"
+                  />
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  getContentAnchorEl={null}
+                >
+                  <MenuItem onClick={handleProfile}>MI PERFIL</MenuItem>
+                  <MenuItem onClick={handleLogout}>CERRAR SESIÓN</MenuItem>
+                </Menu>
+              </div>
+            ) : (
+              <div>
+                <LoginButton
+                  variant="contained"
+                  sx={{ marginLeft: "auto" }}
+                  component={NavLink}
+                  to={"/login"}
+                  onClick={clearTabSelection}
+                >
+                  INICIAR SESIÓN
+                </LoginButton>
+                <SingUpButton
+                  variant="contained"
+                  sx={{ marginLeft: "10px" }}
+                  component={NavLink}
+                  to={"/register"}
+                  onClick={clearTabSelection}
+                >
+                  REGISTRATE
+                </SingUpButton>
+              </div>
+            )}
           </>
         )}
       </Toolbar>

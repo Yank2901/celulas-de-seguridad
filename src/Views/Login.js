@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import users from "../Data/Users.json";
 import { Box, TextField, Typography, Button, Checkbox } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { styled } from "@mui/material/styles";
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import LoginImage from '../Images/LoginImage.png';
 import { validateId, validatePassword } from '../Functions/validateFunctions';
+
 // Estilo personalizado para boton de inicio de sesion
 const LoginButton = styled(Button)(() => ({
   color: "#8C30F5",
@@ -26,12 +26,14 @@ const LoginButton = styled(Button)(() => ({
   height: "40px", // Alto fijo
 }));
 
-const Login = ({ setIsLoggedIn, setUserData }) => {
+const Login = (props) => {
   const [errorId, setErrorId] = useState(false);
   const [id, setId] = useState("");
   const [errorPass, setErrorPass] = useState(false);
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleIdChange = (event) => {
     const value = event.target.value;
@@ -52,36 +54,32 @@ const Login = ({ setIsLoggedIn, setUserData }) => {
   };
 
   const handleLogin = () => {
-    const user = users.find((user) => user.id === id && user.password === password);
-    if (errorId || user.id===""){
-      alert("Por favor ingrese un numero de cedula para iniciar sesión.")
-    } else if (errorPass || user.password===""){
-      alert("Por favor ingrese la contraseña de la cuenta.")
-    } else if (user) {
-      const message = `Se ha iniciado sesión\n\nid: ${user.id}\nPassword: ${user.password}`;
-      setIsLoggedIn(true);
-      setUserData(user);
-      alert(message);
-      if (rememberMe) {
-        localStorage.setItem("rememberedUser", JSON.stringify({ id, password }));
-      } else {
-        localStorage.removeItem("rememberedUser");
-      }
+    const user = props.userList.find((user) => user.id === id && user.password === password);
+    console.log('Este es el usuario:')
+    console.log(user)
+    if (errorId || !user || user.id === "") {
+      alert("Por favor ingrese un número de cédula válido para iniciar sesión.");
+    } else if (errorPass || user.password === "") {
+      alert("Por favor ingrese la contraseña de la cuenta.");
     } else {
-      alert("Inicio de sesión fallido");
+      props.getData(user);
+      localStorage.setItem("rememberedUser", JSON.stringify(user));
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem('remember', JSON.stringify(rememberMe));
+      navigate("/");
     }
   };
 
   useEffect(() => {
-    const rememberedUser = localStorage.getItem("rememberedUser");
-    if (rememberedUser) {
-      const { id, password } = JSON.parse(rememberedUser);
-      setId(id);
-      setPassword(password);
+    const storedUser = localStorage.getItem("rememberedUser");
+    if (storedUser) {
+      const storedUserObj = JSON.parse(storedUser);
+      setId(storedUserObj.id);
+      setPassword(storedUserObj.password);
       setRememberMe(true);
     }
-  }, []);
-
+  }, []);  
+  
   return (
     <Box
       sx={{
@@ -174,8 +172,6 @@ const Login = ({ setIsLoggedIn, setUserData }) => {
           variant="contained"
           sx={{ margin: "auto" }}
           onClick={handleLogin}
-          component={ NavLink }
-          to={undefined} 
         >
           Iniciar Sesión
         </LoginButton>

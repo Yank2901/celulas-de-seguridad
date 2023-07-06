@@ -1,23 +1,22 @@
 [
     {
         "id": "1003450671",
-        "name": "Name",
-        "lastName": "LastName",
-        "email": "mail@domain.com",
+        "name": "Yanick",
+        "lastName": "De la Torre",
+        "email": "yanick.delatorre@epn.edu.ec",
         "password": "Password:1",
-        "userImage": "image",
         "homeDirections": [
             {
-                "province": "provinceName1",
-                "city": "cityName1",
-                "neighborhood": "neighborhoodName1",
-                "address": "addres direction1"
+                "province": "Pichincha",
+                "city": "Quito",
+                "neighborhood": "Mariscal Sucre",
+                "address": "Reina Victoria y Vicente Ramon Roca"
             },
             {
-                "province": "provinceName2",
-                "city": "cityName2",
-                "neighborhood": "neighborhoodName2",
-                "address": "addres direction2"
+                "province": "Imbabura",
+                "city": "Otavalo",
+                "neighborhood": "El Jordan",
+                "address": "Vicente Ramon Roca 12-12 y Quito"
             }
         ]
     },
@@ -27,7 +26,6 @@
         "name": "John",
         "lastName": "Doe",
         "email": "john.doe@example.com",
-        "userImage": "image_url_1",
         "homeDirections": [
             {
                 "province": "provinceName3",
@@ -49,7 +47,6 @@
         "name": "Jane",
         "lastName": "Smith",
         "email": "jane.smith@example.com",
-        "userImage": "image_url_2",
         "homeDirections": [
             {
                 "province": "provinceName5",

@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import users from "../Data/Users.json";
-import { Box, TextField, Typography, Button, Checkbox } from "@mui/material";
-import { NavLink, useLocation } from "react-router-dom";
+import { Box, TextField, Typography, Button, Divider } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 import { styled } from "@mui/material/styles";
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
-import LoginImage from '../Images/LoginImage.png';
-import { validateId, validatePassword } from '../Functions/validateFunctions';
+import LoginImage from "../Images/LoginImage.png";
+import {
+  validateId,
+  validatePassword,
+  validateName,
+  validateLastName,
+  validateEmail,
+} from "../Functions/validateFunctions";
+
 // Estilo personalizado para boton de inicio de sesion
 const LoginButton = styled(Button)(() => ({
   color: "#8C30F5",
@@ -26,7 +30,7 @@ const LoginButton = styled(Button)(() => ({
   height: "40px", // Alto fijo
 }));
 
-const Login = () => {
+const Login = (props) => {
   const [errorId, setErrorId] = useState(false);
   const [id, setId] = useState("");
   const [errorUserName, setErrorUserName] = useState(false);
@@ -37,33 +41,44 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [errorPass, setErrorPass] = useState(false);
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [errorConfirmPass, setErrorConfirmPass] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorProvince, setErrorProvince] = useState(false);
+  const [province, setProvince] = useState("");
+  const [errorCity, setErrorCity] = useState(false);
+  const [city, setCity] = useState("");
+  const [errorNeighborhood, setErrorNeighborhood] = useState(false);
+  const [neighborhood, setNeighborhood] = useState("");
+  const [errorAddress, setErrorAddress] = useState(false);
+  const [address, setAddress] = useState("");
+
+  const navigate = useNavigate();
 
   const handleIdChange = (event) => {
     const value = event.target.value;
     setId(value);
-    const isValid = validateId(value); 
+    const isValid = validateId(value);
     setErrorId(!isValid);
   };
-  
+
   const handleUserNameChange = (event) => {
     const value = event.target.value;
     setUserName(value);
-    const isValid = validatePassword(value);
+    const isValid = validateName(value);
     setErrorUserName(!isValid);
   };
 
   const handleUserLastNameChange = (event) => {
     const value = event.target.value;
     setUserLastName(value);
-    const isValid = validatePassword(value);
+    const isValid = validateLastName(value);
     setErrorUserLastName(!isValid);
   };
 
   const handleEmailChange = (event) => {
     const value = event.target.value;
     setEmail(value);
-    const isValid = validatePassword(value);
+    const isValid = validateEmail(value);
     setErrorEmail(!isValid);
   };
 
@@ -74,27 +89,83 @@ const Login = () => {
     setErrorPass(!isValid);
   };
 
-  const handleCheckboxChange = (event) => {
-    setRememberMe(event.target.checked);
+  const handleConfirmPasswordChange = (event) => {
+    const value = event.target.value;
+    setConfirmPassword(value);
+    const isValid = value === password;
+    setErrorConfirmPass(!isValid);
   };
 
-  const handleLogin = () => {
-    const user = users.find((user) => user.id === id && user.password === password);
-    if (errorId || id===""){
-      alert("Por favor ingrese un numero de cedula para iniciar sesión.")
-    } else if (errorPass || password===""){
-      alert("Por favor ingrese la contraseña de la cuenta.")
-    } else if (user) {
-      const message = `Se ha iniciado sesión\n\nid: ${id}\nPassword: ${password}`;
-      alert(message);
+  const handleProvince = (event) => {
+    const value = event.target.value;
+    setProvince(value);
+    const isValid = validateLastName(value);
+    setErrorProvince(!isValid);
+  };
 
-      if (rememberMe) {
-        localStorage.setItem("rememberedUser", JSON.stringify({ id, password }));
-      } else {
-        localStorage.removeItem("rememberedUser");
-      }
+  const handleCity = (event) => {
+    const value = event.target.value;
+    setCity(value);
+    const isValid = validateLastName(value);
+    setErrorCity(!isValid);
+  };
+
+  const handleNeighborhood = (event) => {
+    const value = event.target.value;
+    setNeighborhood(value);
+    const isValid = validateLastName(value);
+    setErrorNeighborhood(!isValid);
+  };
+
+  const handleAddress = (event) => {
+    const value = event.target.value;
+    setAddress(value);
+    setErrorAddress((value===''));
+  };
+
+  const handleRegister = () => {
+    if (
+      !errorId &&
+      id !== "" &&
+      !errorUserName &&
+      userName !== "" &&
+      !errorUserLastName &&
+      userLastName !== "" &&
+      !errorEmail &&
+      email !== "" &&
+      !errorPass &&
+      password !== "" &&
+      !errorConfirmPass &&
+      confirmPassword !== "" &&
+      !errorProvince &&
+      province !== "" &&
+      !errorCity &&
+      city !== "" &&
+      !errorNeighborhood &&
+      neighborhood !== "" &&
+      !errorAddress &&
+      address !== ""
+    ) {
+      const newUser = {
+        id: id,
+        password: password,
+        name: userName,
+        lastName: userLastName,
+        email: email,
+        homeDirections: [
+          {
+            province: province,
+            city: city,
+            neighborhood: neighborhood,
+            address: address
+          },
+        ]
+      };
+      props.addNewUser(newUser);
+      console.log(newUser)
+      navigate('/')
     } else {
-      alert("Inicio de sesión fallido");
+      alert('Por favor ingrese todos los campos necesarios para el registro.');
     }
   };
 
@@ -124,16 +195,16 @@ const Login = () => {
         noValidate
         autoComplete="off"
       >
-        <Typography 
-          variant="h1" 
+        <Typography
+          variant="h1"
           gutterBottom
           sx={{
-            color: 'var(--text-gray-900, #18191F)',
-            fontSize: '72px',
-            fontFamily: 'Inter',
-            fontStyle: 'normal',
-            fontWeight: '800',
-            lineHeight: '98px',
+            color: "var(--text-gray-900, #18191F)",
+            fontSize: "72px",
+            fontFamily: "Inter",
+            fontStyle: "normal",
+            fontWeight: "800",
+            lineHeight: "98px",
           }}
         >
           Registrate
@@ -143,12 +214,12 @@ const Login = () => {
           error={errorId}
           id="outlined-error-helper-text"
           label="Cedula de Identidad"
-          helperText={errorId ? 'Número de cedula de identidad inválido.' : ''}
+          helperText={errorId ? "Número de cedula de identidad inválido." : ""}
           required
           onBlurCapture={handleIdChange}
           variant="outlined"
           sx={{
-            margin: '10px 0px',
+            margin: "10px 0px",
           }}
         />
 
@@ -157,7 +228,7 @@ const Login = () => {
           error={errorUserName}
           id="outlined-error-helper-text"
           label="Nombre"
-          helperText={errorUserName ? 'Nombre inválido.' : ''} 
+          helperText={errorUserName ? "Nombre inválido." : ""}
           required
           onBlurCapture={handleUserNameChange}
           sx={{
@@ -170,7 +241,7 @@ const Login = () => {
           error={errorUserLastName}
           id="outlined-error-helper-text"
           label="Apellido"
-          helperText={errorUserLastName ? 'Apellido inválido.' : ''} 
+          helperText={errorUserLastName ? "Apellido inválido." : ""}
           required
           onBlurCapture={handleUserLastNameChange}
           sx={{
@@ -183,7 +254,7 @@ const Login = () => {
           error={errorEmail}
           id="outlined-error-helper-text"
           label="Email"
-          helperText={errorEmail ? 'Correo electrónico inválido.' : ''} 
+          helperText={errorEmail ? "Correo electrónico inválido." : ""}
           required
           onBlurCapture={handleEmailChange}
           sx={{
@@ -197,7 +268,7 @@ const Login = () => {
           error={errorPass}
           id="outlined-error-helper-text"
           label="Contraseña"
-          helperText={errorPass ? 'Contraseña inválida.' : ''} 
+          helperText={errorPass ? "Contraseña inválida." : ""}
           required
           onBlurCapture={handlePasswordChange}
           sx={{
@@ -208,49 +279,80 @@ const Login = () => {
         <TextField
           type="password"
           fullWidth
-          error={errorPass}
+          error={errorConfirmPass}
           id="outlined-error-helper-text"
           label="Verifica tu  contraseña"
-          helperText={errorPass ? 'Contraseña inválida.' : ''} 
+          helperText={errorConfirmPass ? "Las contaseñas no coinciden." : ""}
           required
-          onBlurCapture={handlePasswordChange}
+          onBlurCapture={handleConfirmPasswordChange}
           sx={{
             margin: "10px 0px",
           }}
         />
-        
+
+        <Divider
+          sx={{ margin: "10px 10px", border: "solid 1px rgba(0, 0, 0, 0.7)" }}
+        />
+
+        <TextField
+          fullWidth
+          error={errorProvince}
+          id="outlined-error-helper-text"
+          label="Provincia"
+          helperText={errorProvince ? "Nombre de provincia inválido." : ""}
+          required
+          onBlurCapture={handleProvince}
+          sx={{
+            margin: "10px 0px",
+          }}
+        />
+
+        <TextField
+          fullWidth
+          error={errorCity}
+          id="outlined-error-helper-text"
+          label="Ciudad"
+          helperText={errorCity ? "Nombre de ciudad inválido." : ""}
+          required
+          onBlurCapture={handleCity}
+          sx={{
+            margin: "10px 0px",
+          }}
+        />
+
+        <TextField
+          fullWidth
+          error={errorNeighborhood}
+          id="outlined-error-helper-text"
+          label="Barrio"
+          helperText={errorNeighborhood ? "Nombre de barrio inválido." : ""}
+          required
+          onBlurCapture={handleNeighborhood}
+          sx={{
+            margin: "10px 0px",
+          }}
+        />
+
+        <TextField
+          fullWidth
+          error={errorAddress}
+          id="outlined-error-helper-text"
+          label="Dirección"
+          helperText={errorAddress ? "Direccion inválida." : ""}
+          required
+          onBlurCapture={handleAddress}
+          sx={{
+            margin: "10px 0px",
+          }}
+        />
+
         <LoginButton
           variant="contained"
           sx={{ margin: "auto" }}
-          onClick={handleLogin}
-          component={ NavLink }
-          to={undefined} 
+          onClick={handleRegister}
         >
-          Iniciar Sesión
+          Registrate
         </LoginButton>
-        <Typography 
-          variant="body2"
-          sx={{
-            color: "#18191F",
-            fontSize: "18px",
-            fontFamily: "Inter",
-            fontStyle: "normal",
-            fontWeight: "400",
-            lineHeight: "32px",
-            margin: "10px 0px",
-          }} 
-        >
-          No tienes cuenta.&nbsp;
-          <a 
-            href="/register" 
-            style={{
-              color: "#8C30F5",
-              textDecoration: "none",
-            }}
-          >
-            Registrate.
-          </a>
-        </Typography>
       </Box>
       <Box
         sx={{
@@ -263,10 +365,10 @@ const Login = () => {
           loading="lazy"
           alt="Register"
           style={{
-            maxWidth:'100%',
-            width:'100%',
-            height:'auto',
-            objectFit: 'contain',
+            maxWidth: "100%",
+            width: "100%",
+            height: "auto",
+            objectFit: "contain",
           }}
         />
       </Box>
