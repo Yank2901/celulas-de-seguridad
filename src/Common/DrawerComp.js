@@ -7,7 +7,7 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import pages from "../Data/Pages.json";
 import { ListItemButton } from "@mui/material";
@@ -18,25 +18,18 @@ const drawerWidth = 240;
 
 const DrawerComp = (props) => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const navigate = useNavigate();
 
   const handleDrawerClose = () => {
     setOpenDrawer(false);
   };
-  /*
+  
   const handlerCloseSesion = () => {
-    const needRemember = localStorage.getItem("remember");
-
-    if (needRemember==="true") {
-      localStorage.removeItem("isLoggedIn");
-      localStorage.removeItem('remember');
-    } else {
-      localStorage.removeItem("rememberedUser");
-      localStorage.removeItem("isLoggedIn");
-      localStorage.removeItem('remember');
-    }
     setOpenDrawer(false);
+    navigate("/");
+    props.closeSession()
   };
-  */
+  
   return (
     <React.Fragment>
       <Drawer
@@ -79,7 +72,7 @@ const DrawerComp = (props) => {
               <ListItem
                 key="myprofile"
                 component={NavLink}
-                to={"/"}
+                to={"/my-profile"}
                 onClick={() => setOpenDrawer(false)}
               >
                 <ListItemButton>
@@ -93,7 +86,7 @@ const DrawerComp = (props) => {
                 key="logOut"
                 component={NavLink}
                 to={"/"}
-                onClick={handleDrawerClose}
+                onClick={handlerCloseSesion}
               >
                 <ListItemButton>
                   <ListItemText primary={"CERRAR SESIÓN"} />

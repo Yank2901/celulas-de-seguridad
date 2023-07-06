@@ -153,7 +153,7 @@ const Header = (props) => {
           SECURITY CELLS
         </Typography>
         {isMatch ? (
-          <DrawerComp isLoggedIn={props.isLoggedIn} />
+          <DrawerComp isLoggedIn={props.isLoggedIn} closeSession={props.closeSession} />
         ) : (
           <>
             <StyledTabs
