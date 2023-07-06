@@ -21,44 +21,38 @@
         ]
     },
     {
-        "id": "1713175071",
-        "password": "P@ssw0rd!1",
-        "name": "John",
-        "lastName": "Doe",
-        "email": "john.doe@example.com",
+        "id": "1724146335",
+        "name": "Joel",
+        "lastName": "DelHierro",
+        "email": "joel.delhierro@epn.edu.ec",
+        "password": "Password2",
         "homeDirections": [
             {
-                "province": "provinceName3",
-                "city": "cityName3",
-                "neighborhood": "neighborhoodName3",
-                "address": "addres direction3"
-            },
-            {
-                "province": "provinceName4",
-                "city": "cityName4",
-                "neighborhood": "neighborhoodName4",
-                "address": "addres direction4"
+                "province": "Pichincha",
+                "city": "Quito",
+                "neighborhood": "Gualo",
+                "address": "Garcia Moreno y Nicolas Tufiño"
             }
         ]
     },
     {
-        "id": "1754321987",
-        "password": "S3cUr3!Pass2",
-        "name": "Jane",
-        "lastName": "Smith",
-        "email": "jane.smith@example.com",
+        "id": "1454450672",
+        "name": "Alejandra",
+        "lastName": "Escobar",
+        "email": "consuelo.escobar@epn.edu.ec",
+        "password": "Password:5",
         "homeDirections": [
             {
-                "province": "provinceName5",
-                "city": "cityName5",
-                "neighborhood": "neighborhoodName5",
-                "address": "addres direction5"
+                "province": "Pichincha",
+                "city": "Quito",
+                "neighborhood": "Norte",
+                "address": "Colón y Núñez"
             },
             {
-                "province": "provinceName6",
-                "city": "cityName6",
-                "neighborhood": "neighborhoodName6",
-                "address": "addres direction6"
+                "province": "Carchi",
+                "city": "San Gabriel",
+                "neighborhood": "Centro",
+                "address": "12 de Septiembre"
             }
         ]
     }

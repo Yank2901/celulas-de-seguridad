@@ -9,7 +9,7 @@ const MyProfile = (props) => {
         style={{
           borderRadius: "20px",
           backgroundColor: "#A0DCFF",
-          width: "50%",
+          width: "70%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -108,7 +108,7 @@ const MyProfile = (props) => {
         </Typography>
 
         <Divider>
-          <Chip label="INFORMACIÓN DE CONTACTO" />
+          <Chip label="RESIDENCIAS" />
         </Divider>
         {props.userData.homeDirections.map((home) => (
           <div>
