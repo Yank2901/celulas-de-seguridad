@@ -54,16 +54,14 @@ export default function Comment() {
               Diseño intuitivo
             </Typography>
             <Typography variant="body1" color="black" margin={3}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500sLorem30
+              Para iniciar sesión, buscar células o acceder a mis células lo puedo realizar en la parte superior de la pestaña, se puede visalizar fácilmente estas opciones de menú.
             </Typography>
             <FaceIcon sx={{ fontSize: "50px", color: "#1e90ff" }}></FaceIcon>
             <Typography variant="body1" color="black">
-              Usuario1
+              Pedro Gómez
             </Typography>
             <Typography variant="body1" color="black">
-              Comisión A1
+              Bellavista Alta
             </Typography>
           </CardContent>
         </Card>
@@ -82,16 +80,14 @@ export default function Comment() {
               Fácil de utilizar
             </Typography>
             <Typography variant="body1" color="black" margin={3}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s
+              Puedo acceder a información de mis células sólo con haber iniciado sesión.
             </Typography>
             <Face2Icon sx={{ fontSize: "50px", color: "#1e90ff" }}></Face2Icon>
             <Typography variant="body1" color="black">
-              Usuario2
+              Luisa Méndez
             </Typography>
             <Typography variant="body1" color="black">
-              Comisión B1
+              La Vicentina
             </Typography>
           </CardContent>
         </Card>
@@ -109,16 +105,15 @@ export default function Comment() {
               Servicio útil y práctico
             </Typography>
             <Typography variant="body1" color="black" margin={3}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s
+              Puedo alertar a los miembros de la células de mi barrio de forma más rápida con el envío se mensajes ya que esta aplicación se enfoca en mi barrio.
             </Typography>
             <Face3Icon sx={{ fontSize: "50px", color: "#1e90ff" }}></Face3Icon>
             <Typography variant="body1" color="black">
-              Usuario3
             </Typography>
+            Natalia López
             <Typography variant="body1" color="black">
-              Comisión C1
+            San Fernando
+
             </Typography>
           </CardContent>
         </Card>
