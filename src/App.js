@@ -21,6 +21,7 @@ function App() {
   const getData = (user) =>{
     setIsLoggedIn(true);
     setUserData(user);
+    console.log(user);
   }
 
   // Borrar datos de estado cuando el usuario cierra sesion y en base a si queria recordar o no sus datos para un proximo login borro el coockie rememberedUser

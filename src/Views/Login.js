@@ -6,6 +6,7 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import LoginImage from '../Images/LoginImage.png';
 import { validateId, validatePassword } from '../Functions/validateFunctions';
+import axios from "axios";
 
 // Estilo personalizado para boton de inicio de sesion
 const LoginButton = styled(Button)(() => ({
@@ -54,18 +55,25 @@ const Login = (props) => {
   };
 
   const handleLogin = () => {
-    const user = props.userList.find((user) => user.id === id && user.password === password);
-    if (errorId || !user || user.id === "") {
-      alert("Por favor ingrese un número de cédula válido para iniciar sesión.");
-    } else if (errorPass || user.password === "") {
-      alert("Por favor ingrese la contraseña de la cuenta.");
-    } else {
-      props.getData(user);
-      localStorage.setItem("rememberedUser", JSON.stringify(user));
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem('remember', JSON.stringify(rememberMe));
-      navigate("/");
-    }
+    axios.post("http://localhost:8000/api/user", { id, password })
+      .then(response => {
+        const user = response.data;
+        if (errorId || !user || user.id === "") {
+          alert("Por favor ingrese un número de cédula válido para iniciar sesión.");
+        } else if (errorPass || user.password === "") {
+          alert("Por favor ingrese la contraseña de la cuenta.");
+        } else {
+          props.getData(user);
+          localStorage.setItem("rememberedUser", JSON.stringify(user));
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem('remember', JSON.stringify(rememberMe));
+          navigate("/");
+        }
+      })
+      .catch(error => {
+        console.error("Error al realizar la solicitud:", error);
+        alert("Error al iniciar sesión. Por favor, inténtelo de nuevo más tarde.");
+      });
   };
 
   useEffect(() => {
