@@ -157,7 +157,10 @@ const Header = (props) => {
           SECURITY CELLS
         </Typography>
         {isMatch ? (
-          <DrawerComp isLoggedIn={props.isLoggedIn} closeSession={props.closeSession} />
+          <DrawerComp
+            isLoggedIn={props.isLoggedIn}
+            closeSession={props.closeSession}
+          />
         ) : (
           <>
             <StyledTabs
@@ -172,9 +175,16 @@ const Header = (props) => {
                   label={page.title}
                   component={NavLink}
                   to={page.path}
+                  // Agregar la propiedad "disabled" a los enlaces que deben estar bloqueados
+                  disabled={
+                    !props.isLoggedIn &&
+                    (page.title === "BUSCAR CELULAS" ||
+                      page.title === "MIS CELULAS")
+                  }
                 />
               ))}
             </StyledTabs>
+
             {props.isLoggedIn ? (
               <div>
                 <IconButton

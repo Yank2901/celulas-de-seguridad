@@ -42,7 +42,7 @@ const LoginButton = styled(Button)(() => ({
   height: "40px", // Alto fijo
 }));
 
-const Login = (props) => {
+const Login = () => {
   const [errorId, setErrorId] = useState(false);
   const [id, setId] = useState("");
   const [errorUserName, setErrorUserName] = useState(false);
@@ -158,24 +158,31 @@ const Login = (props) => {
   };
 
   const createNewUser = () => {
-    const newUser = {
+    const homeDirections = [
+      {
+        province: province,
+        city: city,
+        neighborhood: neighborhood,
+        address: address,
+      }
+    ];
+  
+    axios.post("http://localhost:8000/api/user/new", {
       id: id,
-      password: password,
       name: userName,
       lastName: userLastName,
       email: email,
-      homeDirections: [
-        {
-          province: province,
-          city: city,
-          neighborhood: neighborhood,
-          address: address,
-        },
-      ],
-    };
-    props.addNewUser(newUser);
-    navigate("/");
-    alert("Usuario registrado con éxito.");
+      password: password,
+      homeDirections: homeDirections
+    })
+      .then(response => {
+        navigate("/");
+        alert("Usuario registrado con éxito.");
+      })
+      .catch(error => {
+        console.error("Error al realizar la solicitud:", error);
+        alert("Error al registrar el usuario. Por favor, inténtelo de nuevo.");
+      });
   };
 
   const getLocations = () => {

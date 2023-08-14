@@ -10,12 +10,10 @@ import MyCells from "./Views/MyCells";
 import FindCells from "./Views/FindCells";
 import ContactUs from "./Views/ContactUs";
 import MyProfile from "./Views/MyProfile"
-import users from "./Data/Users.json";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState();
-  const userList = users;
 
   // Guardar datos de usuario cuando se realiza login
   const getData = (user) =>{
@@ -37,11 +35,6 @@ function App() {
       setIsLoggedIn(false);
       setUserData(null);
     }
-  }
-
-  // Agregar un nuevo usuario pasado por el formulario de registro a la lista
-  const addNewUser = (newUser) => {
-    userList.push(newUser);
   }
 
   // Fucnion para evitar borrar el estado al refrescar la pagina
@@ -74,13 +67,13 @@ function App() {
               - Se envia el metodo getData para tomar la informacion del usuario logueado
               - se envia el userlist para buscar las credenciales de loggin ingresadas
             */}
-            <Route path="/login" element={<Login getData={getData} userList={userList} />} />
+            <Route path="/login" element={<Login getData={getData}/>} />
             <Route path="/find-cells" element={<FindCells />} />
             <Route path="/my-cells" element={<MyCells />} />
             {/* 
               - Se envia el metodo addNewUser para agregar un usuario luego del registro
             */}
-            <Route path="/register" element={<Register addNewUser={addNewUser} />} />
+            <Route path="/register" element={<Register/>} />
             {/* 
               - Se envia el userData para mostrar la informacion en la vista Mi perfil
             */}
