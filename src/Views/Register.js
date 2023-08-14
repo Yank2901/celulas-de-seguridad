@@ -1,6 +1,17 @@
-import React, { useState } from "react";
-import { Box, TextField, Typography, Button, Divider } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  TextField,
+  Typography,
+  Button,
+  Divider,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  FormHelperText,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import LoginImage from "../Images/LoginImage.png";
 import {
@@ -10,6 +21,7 @@ import {
   validateLastName,
   validateEmail,
 } from "../Functions/validateFunctions";
+import axios from "axios";
 
 // Estilo personalizado para boton de inicio de sesion
 const LoginButton = styled(Button)(() => ({
@@ -51,6 +63,7 @@ const Login = (props) => {
   const [neighborhood, setNeighborhood] = useState("");
   const [errorAddress, setErrorAddress] = useState(false);
   const [address, setAddress] = useState("");
+  const [location, setLocation] = useState([]);
 
   const navigate = useNavigate();
 
@@ -96,77 +109,117 @@ const Login = (props) => {
     setErrorConfirmPass(!isValid);
   };
 
-  const handleProvince = (event) => {
+  const handleAddress = (event) => {
+    const value = event.target.value;
+    setAddress(value);
+    setErrorAddress(value === "");
+  };
+
+  const handleRegister = async () => {
+    const isIdValid = await validateId(id);
+    const isUserNameValid = await validateName(userName);
+    const isUserLastNameValid = await validateLastName(userLastName);
+    const isEmailValid = await validateEmail(email);
+    const isPassValid = await validatePassword(password);
+    const isConfirmPassValid =
+      confirmPassword === password && confirmPassword !== "";
+    const isProvinceValid = province !== "";
+    const isCityValid = city !== "";
+    const isNeighborhoodValid = neighborhood !== "";
+    const isAddressValid = address !== "";
+
+    setErrorId(!isIdValid);
+    setErrorUserName(!isUserNameValid);
+    setErrorUserLastName(!isUserLastNameValid);
+    setErrorEmail(!isEmailValid);
+    setErrorPass(!isPassValid);
+    setErrorConfirmPass(!isConfirmPassValid);
+    setErrorProvince(!isProvinceValid);
+    setErrorCity(!isCityValid);
+    setErrorNeighborhood(!isNeighborhoodValid);
+    setErrorAddress(!isAddressValid);
+
+    if (
+      isIdValid &&
+      isUserNameValid &&
+      isUserLastNameValid &&
+      isEmailValid &&
+      isPassValid &&
+      isConfirmPassValid &&
+      isProvinceValid &&
+      isCityValid &&
+      isNeighborhoodValid &&
+      isAddressValid
+    ) {
+      createNewUser();
+    } else {
+      alert("Error al registrar el usuario. Por favor, inténtelo de nuevo.");
+    }
+  };
+
+  const createNewUser = () => {
+    const newUser = {
+      id: id,
+      password: password,
+      name: userName,
+      lastName: userLastName,
+      email: email,
+      homeDirections: [
+        {
+          province: province,
+          city: city,
+          neighborhood: neighborhood,
+          address: address,
+        },
+      ],
+    };
+    props.addNewUser(newUser);
+    navigate("/");
+    alert("Usuario registrado con éxito.");
+  };
+
+  const getLocations = () => {
+    axios
+      .get("http://localhost:8000/api/locations")
+      .then((response) => {
+        const data = response.data;
+        setLocation(data);
+      })
+      .catch((error) => {
+        console.error("Error al realizar la solicitud:", error);
+        alert(
+          "Error al cargar el formulario. Por favor, inténtelo de nuevo más tarde."
+        );
+      });
+  };
+
+  const handleProvinceChange = (event) => {
     const value = event.target.value;
     setProvince(value);
+    setCity("");
+    setNeighborhood("");
     const isValid = validateLastName(value);
     setErrorProvince(!isValid);
   };
 
-  const handleCity = (event) => {
+  const handleCityChange = (event) => {
     const value = event.target.value;
     setCity(value);
+    setNeighborhood("");
     const isValid = validateLastName(value);
     setErrorCity(!isValid);
   };
 
-  const handleNeighborhood = (event) => {
+  const handleNeighborhoodChange = (event) => {
     const value = event.target.value;
     setNeighborhood(value);
     const isValid = validateLastName(value);
     setErrorNeighborhood(!isValid);
   };
 
-  const handleAddress = (event) => {
-    const value = event.target.value;
-    setAddress(value);
-    setErrorAddress((value===''));
-  };
-
-  const handleRegister = () => {
-    if (
-      !errorId &&
-      id !== "" &&
-      !errorUserName &&
-      userName !== "" &&
-      !errorUserLastName &&
-      userLastName !== "" &&
-      !errorEmail &&
-      email !== "" &&
-      !errorPass &&
-      password !== "" &&
-      !errorConfirmPass &&
-      confirmPassword !== "" &&
-      !errorProvince &&
-      province !== "" &&
-      !errorCity &&
-      city !== "" &&
-      !errorNeighborhood &&
-      neighborhood !== "" &&
-      !errorAddress &&
-      address !== ""
-    ) {
-      const newUser = {
-        id: id,
-        password: password,
-        name: userName,
-        lastName: userLastName,
-        email: email,
-        homeDirections: [
-          {
-            province: province,
-            city: city,
-            neighborhood: neighborhood,
-            address: address
-          },
-        ]
-      };
-      props.addNewUser(newUser);
-      navigate('/');
-    } else {
-      alert('Por favor ingrese todos los campos necesarios para el registro.');
-    }
-  };
+  useEffect(() => {
+    getLocations();
+  }, []);
 
   return (
     <Box
@@ -292,45 +345,111 @@ const Login = (props) => {
         <Divider
           sx={{ margin: "10px 10px", border: "solid 1px rgba(0, 0, 0, 0.7)" }}
         />
-
-        <TextField
-          fullWidth
-          error={errorProvince}
-          id="outlined-error-helper-text"
-          label="Provincia"
-          helperText={errorProvince ? "Nombre de provincia inválido." : ""}
-          required
-          onBlurCapture={handleProvince}
-          sx={{
-            margin: "10px 0px",
-          }}
-        />
-
-        <TextField
-          fullWidth
-          error={errorCity}
-          id="outlined-error-helper-text"
-          label="Ciudad"
-          helperText={errorCity ? "Nombre de ciudad inválido." : ""}
-          required
-          onBlurCapture={handleCity}
-          sx={{
-            margin: "10px 0px",
-          }}
-        />
-
-        <TextField
-          fullWidth
-          error={errorNeighborhood}
-          id="outlined-error-helper-text"
-          label="Barrio"
-          helperText={errorNeighborhood ? "Nombre de barrio inválido." : ""}
-          required
-          onBlurCapture={handleNeighborhood}
-          sx={{
-            margin: "10px 0px",
-          }}
-        />
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-province-label">Provincia</InputLabel>
+            <Select
+              error={errorProvince}
+              labelId="demo-province-label"
+              id="demo-province-select"
+              value={province}
+              label="Provincia"
+              onChange={handleProvinceChange}
+              sx={{ marginBottom: "10px" }}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    backgroundColor: "#efe4ce",
+                  },
+                },
+              }}
+            >
+              {location.map((item, index) => (
+                <MenuItem key={index} value={item.province}>
+                  {item.province}
+                </MenuItem>
+              ))}
+            </Select>
+            {errorProvince ? (
+              <FormHelperText sx={{ color: "#db4c3d" }}>
+                Provincia inválida.
+              </FormHelperText>
+            ) : (
+              ""
+            )}
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel id="demo-city-label">Ciudad</InputLabel>
+            <Select
+              error={errorCity}
+              labelId="demo-city-label"
+              id="demo-city-select"
+              value={city}
+              label="Ciudad"
+              onChange={handleCityChange}
+              sx={{ marginBottom: "10px" }}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    backgroundColor: "#efe4ce",
+                  },
+                },
+              }}
+            >
+              {province &&
+                location
+                  .find((item) => item.province === province)
+                  .cities.map((cityItem, index) => (
+                    <MenuItem key={index} value={cityItem.city}>
+                      {cityItem.city}
+                    </MenuItem>
+                  ))}
+            </Select>
+            {errorCity ? (
+              <FormHelperText sx={{ color: "#db4c3d" }}>
+                Ciudad inválida.
+              </FormHelperText>
+            ) : (
+              ""
+            )}
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel id="demo-neighborhood-label">Barrio</InputLabel>
+            <Select
+              error={errorNeighborhood}
+              labelId="demo-neighborhood-label"
+              id="demo-neighborhood-select"
+              value={neighborhood}
+              label="Barrio"
+              onChange={handleNeighborhoodChange}
+              sx={{ marginBottom: "10px" }}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    backgroundColor: "#efe4ce",
+                  },
+                },
+              }}
+            >
+              {city &&
+                location
+                  .find((item) => item.province === province)
+                  .cities.find((cityItem) => cityItem.city === city)
+                  .neighborhoods.map((neighborhoodItem, index) => (
+                    <MenuItem key={index} value={neighborhoodItem}>
+                      {neighborhoodItem}
+                    </MenuItem>
+                  ))}
+            </Select>
+            {errorNeighborhood ? (
+              <FormHelperText sx={{ color: "#db4c3d" }}>
+                Barrio inválido.
+              </FormHelperText>
+            ) : (
+              ""
+            )}
+          </FormControl>
+        </Box>
 
         <TextField
           fullWidth
@@ -341,7 +460,7 @@ const Login = (props) => {
           required
           onBlurCapture={handleAddress}
           sx={{
-            margin: "10px 0px",
+            marginBottom: "10px",
           }}
         />
 

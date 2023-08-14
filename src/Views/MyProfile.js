@@ -1,8 +1,31 @@
 import { Typography, Divider, Chip } from "@mui/material";
-import { React, Fragment } from "react";
+import React, { useState, useEffect } from "react";
+import { Fragment } from "react";
+import { useNavigate } from 'react-router-dom';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import axios from "axios";
 
 const MyProfile = (props) => {
+  // quiero crear una variable para almacenar el resultado de la peticion get
+  const [location, setLocation] = useState([]);
+
+  const getLocations = () => {
+    /*
+    Utilizando axios voy a realizar una peticion get para obtener mi JSON de provincias, ciudades y barrios para que en el formulario en lugar de usar un textfield use un dropdown que me muestre las opciones de provincias, ciudades y barrios
+    axios.get("http://localhost:8000/api/location",
+    */
+
+    axios.get("http://localhost:8000/api/location")
+    .then((response) => {
+      const data = response.data;
+      setLocation(data);
+    })
+    .catch((error) => {
+      console.error("Error al realizar la solicitud:", error);
+      alert("Error al cargar el formulario. Por favor, inténtelo de nuevo más tarde.");
+    });
+  };
+
   return (
     <Fragment>
       <div
