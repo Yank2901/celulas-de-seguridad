@@ -9,7 +9,8 @@ import Register from "./Views/Register";
 import MyCells from "./Views/MyCells";
 import FindCells from "./Views/FindCells";
 import ContactUs from "./Views/ContactUs";
-import MyProfile from "./Views/MyProfile"
+import MyProfile from "./Views/MyProfile";
+import Chat from "./Views/Chat";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -63,21 +64,12 @@ function App() {
         <div className="content-container">
           <Routes>
             <Route path="/contact-us" element={<ContactUs />} />
-            {/* 
-              - Se envia el metodo getData para tomar la informacion del usuario logueado
-              - se envia el userlist para buscar las credenciales de loggin ingresadas
-            */}
             <Route path="/login" element={<Login getData={getData}/>} />
-            <Route path="/find-cells" element={<FindCells />} />
-            <Route path="/my-cells" element={<MyCells />} />
-            {/* 
-              - Se envia el metodo addNewUser para agregar un usuario luego del registro
-            */}
+            <Route path="/find-cells" element={<FindCells userData={userData}/>} />
+            <Route path="/my-cells" element={<MyCells userData={userData}/>} />
             <Route path="/register" element={<Register/>} />
-            {/* 
-              - Se envia el userData para mostrar la informacion en la vista Mi perfil
-            */}
             <Route path="/my-profile" element={<MyProfile userData={userData}/>} />
+            <Route path="/chat/:id" element={<Chat userData={userData}/>} />
             <Route path="/" element={<Home />} />
           </Routes>
         </div>
