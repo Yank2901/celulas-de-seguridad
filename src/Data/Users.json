@@ -55,5 +55,545 @@
                 "address": "12 de Septiembre"
             }
         ]
+    },
+    {
+        "id": "1103201461",
+        "name": "Rodrigo",
+        "lastName": "Lara",
+        "email": "rodrigo.lara@correo.com",
+        "password": "Password:8",
+        "homeDirections": [
+            {
+                "province": "Imbabura",
+                "city": "Ibarra",
+                "neighborhood": "San Francisco",
+                "address": "Rafael Carvajal y Chorlaví"
+            }
+        ]
+    },
+    {
+        "id": "0102051349",
+        "name": "Sofía",
+        "lastName": "Ramírez",
+        "email": "sofia.ramirez@correo.com",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province":"Imbabura",
+                "city": "Ibarra",
+                "neighborhood": "San Francisco",
+                "address":"Rafael Carvajal y Chorlaví"
+            },
+            {
+                "province":"Azuay",
+                "city": "Cuenca",
+                "neighborhood": "El Batán",
+                "address":"Antisana e Iliniza"
+            }
+        ]
+    },
+    {
+        "id": "1713580221",
+        "name": "Valeria",
+        "lastName": "Álvarez",
+        "email": "valeria.alvarez@correo.com",
+        "password": "Password:24",
+        "homeDirections": [
+            {
+                "province":"Imbabura",
+                "city": "Ibarra",
+                "neighborhood": "San Francisco",
+                "address":"Rafael Carvajal y Chorlaví"
+            },
+            {
+                "province":"Bolívar",
+                "city": "Guaranda",
+                "neighborhood": "La Pila",
+                "address":"Abdón Calderón y Rafael Almeida"
+            }
+        ]
+    },
+    {
+        "id": "0601899396",
+        "name": "Lucas",
+        "lastName": "Medrano",
+        "email": "lucas.medrano@correo.com",
+        "password": "Password:78",
+        "homeDirections": [
+            {
+                "province":"Imbabura",
+                "city": "Ibarra",
+                "neighborhood": "San Francisco",
+                "address":"Simón Bolívar y Miguel Oviedo"
+            },
+            {
+                "province":"Chimborazo",
+                "city": "Riobamba",
+                "neighborhood": "Amula chico",
+                "address":"Boyacá y Alvarado"
+            }
+        ]
+    },
+    {
+        "id": "1305267542",
+        "name": "Teresa",
+        "lastName": "Arboleda",
+        "email": "teresa.arboleda@correo.com",
+        "password": "Password:89",
+        "homeDirections": [
+            {
+                "province":"Imbabura",
+                "city": "Ibarra",
+                "neighborhood": "San Francisco",
+                "address":"Simón Bolívar y Miguel Oviedo"
+            }
+        ]
+    },
+    {
+        "id": "0200562791",
+        "name": "Pedro",
+        "lastName": "Román",
+        "email": "pedro.roman@correo.com",
+        "password": "Password:55",
+        "homeDirections": [
+            {
+                "province":"Imbabura",
+                "city": "Ibarra",
+                "neighborhood": "San Francisco",
+                "address":"Simón Bolívar y Miguel Oviedo"
+            },
+            {
+                "province":"Cotopaxi",
+                "city": "La Maná",
+                "neighborhood": "El Carmen",
+                "address":"Amazonas y Velasco Ibarra"
+            }
+        ]
+    },
+    {
+        "id": "0501675946",
+        "name": "Belén",
+        "lastName": "Portilla",
+        "email": "belen.portilla@correo.com",
+        "password": "Password:78",
+        "homeDirections": [
+            {
+                "province":"Guayas",
+                "city": "Guayaquil",
+                "neighborhood": "La Bota",
+                "address":"Guillermo Cubillo y Emilio Romero"
+            },
+            {
+                "province":"Cotopaxi",
+                "city": "La Maná",
+                "neighborhood": "El Carmen",
+                "address":"Amazonas y El Oro"
+            }
+        ]
+    },
+    {
+        "id": "1303292583",
+        "name": "Roberto",
+        "lastName": "Valencia",
+        "email": "roberto.valencia@correo.com",
+        "password": "Password:23",
+        "homeDirections": [
+            {
+                "province":"Guayas",
+                "city": "Guayaquil",
+                "neighborhood": "La Bota",
+                "address":"Guillermo Cubillo y Emilio Romero"
+            }
+        ]
+    },
+    {
+        "id": "1200984761",
+        "name": "David",
+        "lastName": "Palermo",
+        "email": "david.palermo@correo.com",
+        "password": "Password:88",
+        "homeDirections": [
+            {
+                "province":"Guayas",
+                "city": "Guayaquil",
+                "neighborhood": "La Bota",
+                "address":"Guillermo Cubillo y Emilio Romero"
+            },
+            {
+                "province":"El Oro",
+                "city": "Machala",
+                "neighborhood": "La Maria",
+                "address":"Pasaje y Santa Rosa"
+            }
+        ]
+    },
+    {
+        "id": "1708706302",
+        "name": "José",
+        "lastName": "Delgado",
+        "email": "jose.delgado@correo.com",
+        "password": "Password:52",
+        "homeDirections": [
+            {
+                "province":"Guayas",
+                "city": "Guayaquil",
+                "neighborhood": "La Ciénaga",
+                "address":"Av.38B y 19C"
+            }
+        
+        ]
+    },
+    {
+        "id": "0913056123",
+        "name": "Samuel",
+        "lastName": "Galarza",
+        "email": "sammuel.galarza@correo.com",
+        "password": "Password:63",
+        "homeDirections": [
+            {
+                "province":"Guayas",
+                "city": "Guayaquil",
+                "neighborhood": "La Ciénaga",
+                "address":"Av.38B y 19C"
+            },
+            {
+                "province":"El Oro",
+                "city": "Pasaje",
+                "neighborhood": "11 de Julio",
+                "address":"Independencia y Luis Fajardo"
+            }
+        
+        ]
+    },
+    {
+        "id": "1711453470",
+        "name": "Carla",
+        "lastName": "Sosa",
+        "email": "carla.sosa@correo.com",
+        "password": "Password:74",
+        "homeDirections": [
+            {
+                "province":"Guayas",
+                "city": "Guayaquil",
+                "neighborhood": "La Ciénaga",
+                "address":"Av.38B y 19C"
+            },
+            {
+                "province":"Morona Santiago",
+                "city": "Macas",
+                "neighborhood": "Valle Real",
+                "address":"Velasco Ibarra y 12 de Febrero"
+            }
+        
+        ]
+    },
+    {
+        "id": "0701396830",
+        "name": "Martha",
+        "lastName": "Lima",
+        "email": "martha.lima@correo.com",
+        "password": "Password:91",
+        "homeDirections": [
+            {
+                "province":"Guayas",
+                "city": "Durán",
+                "neighborhood": "Delia",
+                "address":"Huaquilla y Yaguachi"
+            },
+            {
+                "province":"Morona Santiago",
+                "city": "Macas",
+                "neighborhood": "Valle Real",
+                "address":"Velasco Ibarra y Juan Montalvo"
+            }
+        
+        ]
+    },
+    {
+        "id": "0300907441",
+        "name": "Carlos",
+        "lastName": "Rosero",
+        "email": "carlos.rosero@correo.com",
+        "password": "Password:100",
+        "homeDirections": [
+            {
+                "province":"Guayas",
+                "city": "Durán",
+                "neighborhood": "Delia",
+                "address":"Huaquilla y Yaguachi"
+            }
+        
+        ]
+    },
+    {
+        "id": "1711402980",
+        "name": "Fernando",
+        "lastName": "Ponce",
+        "email": "fernando.ponce@correo.com",
+        "password": "Password:42",
+        "homeDirections": [
+            {
+                "province":"Guayas",
+                "city": "Durán",
+                "neighborhood": "Delia",
+                "address":"Huaquilla y Yaguachi"
+            },
+            {
+                "province":"Orellana",
+                "city": "Loreto",
+                "neighborhood": "Cascabel 2",
+                "address":"Guami y Mateo Puraquilla"
+            }
+        
+        ]
+    },
+    {
+        "id": "1303753618",
+        "name": "Juan",
+        "lastName": "Cuenta",
+        "email": "juan.cuenta@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Quito",
+                "neighborhood": "Carcelén",
+                "address": "Av Jaime Roldos y Republica Dominicana"
+            }
+        ]
+    },
+
+    {
+        "id": "1706172648",
+        "name": "Julio",
+        "lastName": "Aguayo",
+        "email": "julio.aguayo@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Quito",
+                "neighborhood": "Carcelén",
+                "address": "Av Jaime Roldos y E1C"
+            }
+        ]
+    },
+
+    {
+        "id": "0100967652",
+        "name": "Luis",
+        "lastName": "Barahona",
+        "email": "luis.barahona@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Quito",
+                "neighborhood": "Carcelén",
+                "address": "E1C y N86"
+            }
+        ]
+    },
+
+
+
+
+    {
+        "id": "1103037048",
+        "name": "Alexa",
+        "lastName": "Bermeo",
+        "email": "alexa.bermeo@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Quito",
+                "neighborhood": "Carcelén",
+                "address": "Av Francisco Sánchez y Av Perimetral"
+            }
+        ]
+    },
+
+    {
+        "id": "1704997012",
+        "name": "Irene",
+        "lastName": "Carrera",
+        "email": "irene.carrera@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Quito",
+                "neighborhood": "Carcelén",
+                "address": "Av Perimetral y Granate"
+            }
+        ]
+    },
+
+    {
+        "id": "1714818299",
+        "name": "Javier",
+        "lastName": "Cordero",
+        "email": "javier.cordero@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Quito",
+                "neighborhood": "Carcelén",
+                "address": "Granate y Berillo"
+            }
+        ]
+    },
+
+    
+
+    
+    {
+        "id": "1713627071",
+        "name": "Eduardo",
+        "lastName": "Donoso",
+        "email": "eduardo.donoso@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Quito",
+                "neighborhood": "Carcelén",
+                "address": "Diamante y Ambar"
+            }
+        ]
+    },
+
+    {
+        "id": "0200982163",
+        "name": "Fernando",
+        "lastName": "Aguilar",
+        "email": "fernando.aguilar@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Quito",
+                "neighborhood": "Carcelén",
+                "address": "Diamante y Cuarzo"
+            }
+        ]
+    },
+
+    {
+        "id": "0913537742",
+        "name": "Carlos",
+        "lastName": "Figueroa",
+        "email": "luis.barahona@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Quito",
+                "neighborhood": "Carcelén",
+                "address": "Perla y Cuarzo"
+            }
+        ]
+    },
+
+
+
+    {
+        "id": "0401197298",
+        "name": "Ramiro",
+        "lastName": "Espinosa",
+        "email": "ramiro.espinosa@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Cayambe",
+                "neighborhood": "Ayora",
+                "address": "Av Pichincha y Chimborazo"
+            }
+        ]
+    },
+
+    {
+        "id": "0702648551",
+        "name": "Fernando",
+        "lastName": "Aguilar",
+        "email": "fernando.aguilar@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Cayambe",
+                "neighborhood": "Ayora",
+                "address": "Esmeraldas y Chimborazo"
+            }
+        ]
+    },
+
+    {
+        "id": "1715241434",
+        "name": "Carlos",
+        "lastName": "Figueroa",
+        "email": "luis.barahona@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Cayambe",
+                "neighborhood": "Ayora",
+                "address": "Cañar y Chimborazo"
+            }
+        ]
+    },
+
+
+
+    {
+        "id": "0917385288",
+        "name": "Andrés",
+        "lastName": "García",
+        "email": "andres.garcia@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Cayambe",
+                "neighborhood": "Ayora",
+                "address": "Amazonas y Rocafuerte"
+            }
+        ]
+    },
+
+    {
+        "id": "1103756134",
+        "name": "Mario",
+        "lastName": "Guerrero",
+        "email": "mario.guerrero@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Cayambe",
+                "neighborhood": "Ayora",
+                "address": "Amazonas y Bolivar"
+            }
+        ]
+    },
+
+    {
+        "id": "0601646623",
+        "name": "Jaime",
+        "lastName": "Hurtado",
+        "email": "jaime.hurtado@epn.edu.ec",
+        "password": "Password:2",
+        "homeDirections": [
+            {
+                "province": "Pichincha",
+                "city": "Cayambe",
+                "neighborhood": "Ayora",
+                "address": "Bolivar y Otavalo"
+            }
+        ]
     }
 ]
