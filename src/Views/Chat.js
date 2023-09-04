@@ -1,3 +1,5 @@
+import React, { useState, useEffect, useMemo, useRef, Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Box,
@@ -14,7 +16,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { React, Fragment, useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import AddIcon from "@mui/icons-material/Add";
@@ -28,7 +29,7 @@ import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import backgroundImage from "../Images/background.png";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { generateUniqueColors } from "../Functions/validateFunctions"
+import { generateUniqueColors } from "../Functions/validateFunctions";
 
 const actions = [
   {
@@ -69,12 +70,14 @@ const Chat = (props) => {
   const { id } = useParams();
   const [cellData, setCellData] = useState({});
   const [cellUsers, setCellUsers] = useState([]);
+  const [cellMessages, setCellMessages] = useState([]);
   const userId = props.userData.id;
   const [message, setMessage] = useState({
     color: "#e0e0e0",
     code: 0,
     content: "",
   });
+  const navigate = useNavigate();
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -86,6 +89,17 @@ const Chat = (props) => {
     }
 
     setIsDrawerOpen(open);
+  };
+
+  // Create a ref for the chat message container
+  const messageContainerRef = useRef(null);
+
+  // Function to scroll to the bottom of the chat container
+  const scrollToBottom = () => {
+    if (messageContainerRef.current) {
+      messageContainerRef.current.scrollTop =
+        messageContainerRef.current.scrollHeight;
+    }
   };
 
   const getDataCell = () => {
@@ -111,9 +125,35 @@ const Chat = (props) => {
       })
       .catch((error) => {
         console.error("Error al realizar la solicitud:", error);
+      });
+  };
+
+  const getMessages = () => {
+    axios
+      .get(`http://localhost:8000/api/chats/${id}`)
+      .then((response) => {
+        const data = response.data;
+        setCellMessages(data);
+        scrollToBottom();
+      })
+      .catch((error) => {
+        console.error("Error al realizar la solicitud:", error);
         alert(
           "Error al cargar el formulario. Por favor, inténtelo de nuevo más tarde."
         );
+      });
+  };
+
+  const hanleDeleteUser = (userId) => {
+    axios
+      .delete(`http://localhost:8000/api/cell//deleteUser/${id}/${userId}`)
+      .then((response) => {
+        const data = response.data;
+        setCellUsers(data);
+        navigate("/my-cells");
+      })
+      .catch((error) => {
+        console.error("Error al realizar la solicitud:", error);
       });
   };
 
@@ -121,15 +161,26 @@ const Chat = (props) => {
     let text = message.content.trim();
     if (text !== "") {
       setMessage({ ...message, content: text });
-      let messageData = {
-        idCell: id,
-        idUser: userId,
-        message: message.content,
-        date: new Date(),
-        typeMessage: message.code,
-      };
-      console.log("Mensaje enviado:");
-      console.log(messageData);
+      axios
+        .post("http://localhost:8000/api/chat/new", {
+          idCell: id,
+          idUser: userId,
+          nameUser: props.userData.name + " " + props.userData.lastName,
+          message: message.content,
+          date: new Date(),
+          typeMessage: message.code,
+        })
+        .then((response) => {
+          const data = response.data;
+          setCellMessages([...cellMessages, data]);
+          scrollToBottom();
+        })
+        .catch((error) => {
+          console.error("Error al realizar la solicitud:", error);
+          alert(
+            "Error al cargar el formulario. Por favor, inténtelo de nuevo más tarde."
+          );
+        });
     }
     setMessage({ ...message, content: "" });
   };
@@ -145,9 +196,10 @@ const Chat = (props) => {
 
   useEffect(() => {
     getDataCell();
+    getMessages();
   }, [id]);
 
-  const memoizedColorMap = useMemo(() => {
+  const memorizedColorMap = useMemo(() => {
     const uniqueColors = generateUniqueColors(cellUsers.length);
     const colorMap = {};
     cellUsers.forEach((user, index) => {
@@ -205,7 +257,9 @@ const Chat = (props) => {
                     <ListItemButton>
                       <ListItemAvatar>
                         <Avatar
-                          style={{ backgroundColor: memoizedColorMap[user.id] }}
+                          style={{
+                            backgroundColor: memorizedColorMap[user.id],
+                          }}
                         >
                           {user.name.charAt(0)}
                         </Avatar>
@@ -214,7 +268,7 @@ const Chat = (props) => {
                     </ListItemButton>
                     <ListItemButton>
                       <HighlightOffIcon
-                        onClick={() => console.log(user.id)} // Agrega un manejador para eliminar el usuario si es necesario
+                        onClick={() => hanleDeleteUser(user.id)}
                         style={{
                           cursor: "pointer",
                           color: "red",
@@ -227,7 +281,7 @@ const Chat = (props) => {
                   <ListItemButton>
                     <ListItemAvatar>
                       <Avatar
-                        style={{ backgroundColor: memoizedColorMap[user.id] }}
+                        style={{ backgroundColor: memorizedColorMap[user.id] }}
                       >
                         {user.name.charAt(0)}
                       </Avatar>
@@ -261,6 +315,8 @@ const Chat = (props) => {
         autoComplete="on"
       >
         <Box
+          // Assign the ref to the message container
+          ref={messageContainerRef}
           sx={{
             overflowY: "scroll",
             width: "97%",
@@ -281,111 +337,17 @@ const Chat = (props) => {
             maxHeight: "calc(55vh)", // Puedes ajustar esta altura según tus necesidades
           }}
         >
-          {/* Mensajes quemados */}
-          <ChatMessage
-            userId="0450194246"
-            userName="Alejandra Escobar"
-            content="Hola, ¿cómo están?"
-            code={0}
-            color={memoizedColorMap["0450194246"]}
-            userLogged={userId}
-          />
-
-          <ChatMessage
-            userId="1003450671"
-            userName="Yanick De la Torre"
-            content="¡Hola! Estoy bien, gracias."
-            code={0}
-            color={memoizedColorMap["1003450671"]}
-            userLogged={userId}
-          />
-
-          <ChatMessage
-            userId="1724146335"
-            userName="Joel DelHierro"
-            content="¿Qué tal están ustedes?"
-            code={0}
-            color={memoizedColorMap["1724146335"]}
-            userLogged={userId}
-          />
-          <ChatMessage
-            userId="0450194246"
-            userName="Alejandra Escobar"
-            content="Hola, ¿cómo están?"
-            code={0}
-            color={memoizedColorMap["0450194246"]}
-            userLogged={userId}
-          />
-
-          <ChatMessage
-            userId="1003450671"
-            userName="Yanick De la Torre"
-            content="¡Hola! Estoy bien, gracias."
-            code={0}
-            color={memoizedColorMap["1003450671"]}
-            userLogged={userId}
-          />
-
-          <ChatMessage
-            userId="1724146335"
-            userName="Joel DelHierro"
-            content="¿Qué tal están ustedes?"
-            code={0}
-            color={memoizedColorMap["1724146335"]}
-            userLogged={userId}
-          />
-          <ChatMessage
-            userId="0450194246"
-            userName="Alejandra Escobar"
-            content="Hola, ¿cómo están?"
-            code={0}
-            color={memoizedColorMap["0450194246"]}
-            userLogged={userId}
-          />
-
-          <ChatMessage
-            userId="1003450671"
-            userName="Yanick De la Torre"
-            content="¡Hola! Estoy bien, gracias."
-            code={0}
-            color={memoizedColorMap["1003450671"]}
-            userLogged={userId}
-          />
-
-          <ChatMessage
-            userId="1724146335"
-            userName="Joel DelHierro"
-            content="¿Qué tal están ustedes?"
-            code={0}
-            color={memoizedColorMap["1724146335"]}
-            userLogged={userId}
-          />
-          <ChatMessage
-            userId="0450194246"
-            userName="Alejandra Escobar"
-            content="Hola, ¿cómo están?"
-            code={0}
-            color={memoizedColorMap["0450194246"]}
-            userLogged={userId}
-          />
-
-          <ChatMessage
-            userId="1003450671"
-            userName="Yanick De la Torre"
-            content="¡Hola! Estoy bien, gracias."
-            code={0}
-            color={memoizedColorMap["1003450671"]}
-            userLogged={userId}
-          />
-
-          <ChatMessage
-            userId="1724146335"
-            userName="Joel DelHierro"
-            content="¿Qué tal están ustedes?"
-            code={0}
-            color={memoizedColorMap["1724146335"]}
-            userLogged={userId}
-          />
+          {cellMessages.map((message) => (
+            <ChatMessage
+              key={message.date}
+              userId={message.idUser}
+              userName={message.nameUser}
+              content={message.message}
+              code={message.typeMessage}
+              color={memorizedColorMap[message.idUser]}
+              userLogged={userId}
+            />
+          ))}
         </Box>
       </Box>
 
