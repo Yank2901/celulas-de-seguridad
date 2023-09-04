@@ -1,35 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Avatar from "@mui/material/Avatar";
 
-const ChatMessage = ({ code, message }) => {
+const ChatMessage = ({ userId, userName, content, code, color, userLogged }) => {
+  const isLogged = userId === userLogged;
+
   return (
     <div
       style={{
         display: "flex",
-        flexDirection: code === 0 ? "row-reverse" : "row",
+        flexDirection: isLogged ? "row-reverse" : "row",
         alignItems: "center",
         marginBottom: "10px",
       }}
     >
-      {code === 1 && (
-        <img
-          src="https://via.placeholder.com/50"
-          alt="Avatar"
-          style={{ marginRight: "10px" }}
-        />
+      {!isLogged && (
+        <Avatar
+          style={{
+            backgroundColor: color, // Remove curly braces here
+            marginRight: "10px",
+          }}
+        >
+          {userName.charAt(0)}
+        </Avatar>
       )}
       <div
         style={{
-          backgroundColor: code === 0 ? "green" : "gray",
-          color: "white",
+          backgroundColor:
+            code === 0 ? (isLogged ? "#d2f5ba" : "#f5f5f5") : "#f5f5f5",
+          color: "black",
           padding: "10px",
           borderRadius: "10px",
-          maxWidth: "70%",
+          maxWidth: "40%",
+          textAlign: isLogged ? "right" : "left",
         }}
       >
-        {message}
+        {!isLogged && <strong>{userName}</strong>}
+        <p>{content}</p>
       </div>
     </div>
   );
-}
+};
 
 export default ChatMessage;

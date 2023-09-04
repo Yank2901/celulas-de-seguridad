@@ -120,4 +120,22 @@ export function validatePassword (password) {
     // Si todos los criterios son cumplidos, el correo electrónico es válido
     return true;
   }
+
+  export function generateUniqueColors(numColors) {
+    const uniqueColors = [];
+    const letters = "0123456789ABCDEF";
+  
+    while (uniqueColors.length < numColors) {
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      
+      if (!uniqueColors.includes(color)) {
+        uniqueColors.push(color);
+      }
+    }
+  
+    return uniqueColors;
+  }
   
