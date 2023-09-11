@@ -30,6 +30,9 @@ import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import backgroundImage from "../Images/background.png";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { generateUniqueColors } from "../Functions/validateFunctions";
+import socketIOClient from "socket.io-client";
+
+const socket = socketIOClient("http://localhost:8000");
 
 const actions = [
   {
@@ -71,10 +74,10 @@ const Chat = (props) => {
   const [cellData, setCellData] = useState({});
   const [cellUsers, setCellUsers] = useState([]);
   const [cellMessages, setCellMessages] = useState([]);
-  const userId = props.userData.id;
+  const userId = props.userData ? props.userData.id : null;
   const [message, setMessage] = useState({
     color: "#e0e0e0",
-    code: 0,
+    code: "0",
     content: "",
   });
   const navigate = useNavigate();
@@ -91,16 +94,45 @@ const Chat = (props) => {
     setIsDrawerOpen(open);
   };
 
-  // Create a ref for the chat message container
   const messageContainerRef = useRef(null);
 
-  // Function to scroll to the bottom of the chat container
   const scrollToBottom = () => {
     if (messageContainerRef.current) {
       messageContainerRef.current.scrollTop =
         messageContainerRef.current.scrollHeight;
     }
   };
+
+  useEffect(() => {
+    socket.connect();
+
+    socket.on("connect", () => {
+      console.log("Conectado al servidor WebSocket");
+    });
+
+    socket.on("mensaje-confirmado", (data) => {
+      setCellMessages((prevState) => [
+        ...prevState,
+        {
+          idCell: data.idCell,
+          idUser: data.idUser,
+          nameUser: data.nameUser,
+          message: data.message,
+          date: data.date,
+          typeMessage: data.typeMessage,
+        },
+      ]);
+      scrollToBottom();
+    });
+
+    socket.on("usuarios-actualizados", (data) => {
+      setCellUsers(data);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const getDataCell = () => {
     axios
@@ -150,7 +182,26 @@ const Chat = (props) => {
       .then((response) => {
         const data = response.data;
         setCellUsers(data);
+        sendExitMessage();
         navigate("/my-cells");
+      })
+      .catch((error) => {
+        console.error("Error al realizar la solicitud:", error);
+      });
+  };
+
+  const sendExitMessage = () => {
+    axios
+      .post("http://localhost:8000/api/chat/new", {
+        idCell: id,
+        idUser: userId,
+        nameUser: props.userData.name + " " + props.userData.lastName,
+        message: "Se ha retirado de la celula de seguridad.",
+        date: new Date(),
+        typeMessage: 1,
+      })
+      .then((_) => {
+        console.log("Mensaje de salida enviado");
       })
       .catch((error) => {
         console.error("Error al realizar la solicitud:", error);
@@ -160,29 +211,15 @@ const Chat = (props) => {
   const sendMessage = () => {
     let text = message.content.trim();
     if (text !== "") {
-      setMessage({ ...message, content: text });
-      axios
-        .post("http://localhost:8000/api/chat/new", {
-          idCell: id,
-          idUser: userId,
-          nameUser: props.userData.name + " " + props.userData.lastName,
-          message: message.content,
-          date: new Date(),
-          typeMessage: message.code,
-        })
-        .then((response) => {
-          const data = response.data;
-          setCellMessages([...cellMessages, data]);
-          scrollToBottom();
-        })
-        .catch((error) => {
-          console.error("Error al realizar la solicitud:", error);
-          alert(
-            "Error al cargar el formulario. Por favor, inténtelo de nuevo más tarde."
-          );
-        });
+      socket.emit("mensaje", {
+        idCell: id,
+        idUser: userId,
+        nameUser: props.userData.name + " " + props.userData.lastName,
+        message: text,
+        date: new Date(),
+        typeMessage: message.code,
+      });
     }
-    setMessage({ ...message, content: "" });
   };
 
   const handleColorChange = (color, code) => {
@@ -311,11 +348,8 @@ const Chat = (props) => {
           marginTop: "20px",
           marginBottom: "20px",
         }}
-        noValidate
-        autoComplete="on"
       >
         <Box
-          // Assign the ref to the message container
           ref={messageContainerRef}
           sx={{
             overflowY: "scroll",
@@ -333,13 +367,12 @@ const Chat = (props) => {
             "&::-webkit-scrollbar-track": {
               backgroundColor: "#999999",
             },
-            // Establece una altura máxima para el scroll
-            maxHeight: "calc(55vh)", // Puedes ajustar esta altura según tus necesidades
+            maxHeight: "calc(55vh)",
           }}
         >
-          {cellMessages.map((message) => (
+          {cellMessages.map((message, index) => (
             <ChatMessage
-              key={message.date}
+              key={index}
               userId={message.idUser}
               userName={message.nameUser}
               content={message.message}
@@ -423,7 +456,6 @@ const Chat = (props) => {
           onChange={(e) => setMessage({ ...message, content: e.target.value })}
         />
 
-        {/* Botón para enviar mensaje */}
         <Fab
           variant="extended"
           sx={{

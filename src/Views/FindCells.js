@@ -25,7 +25,7 @@ import AddIcon from "@mui/icons-material/Add";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import { Fragment } from "react";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import cell1 from "../Images/cell1.jpg";
 import cell2 from "../Images/cell2.jpg";
@@ -60,7 +60,53 @@ const FindCells = (props) => {
   const navigate = useNavigate();
 
   const handleCellClick = (cellId) => {
-    navigate(`/chat/${cellId}`)
+    axios
+      .get(`http://localhost:8000/api/cell/${cellId}`)
+      .then((response) => {
+        const users = response.data.users;
+        const user = users.find((user) => user.id === props.userData.id);
+        if (!user) {
+          addNewUserToCell(cellId)
+        }
+        setTimeout(() => {
+          navigate(`/chat/${cellId}`);
+        }, 250);
+      })
+      .catch((error) => {
+        console.error("Error al realizar la solicitud:", error);
+      });
+  };
+
+  const addNewUserToCell = (cellId) => {
+    axios.put(`http://localhost:8000/api/cell/addUser/${cellId}`, {
+      id: props.userData.id,
+      name: props.userData.name + " " + props.userData.lastName,
+    })
+    .then((_) => {
+      console.log("Usuario agregado a la celula de seguridad");
+      sendRegisterMessage(cellId);
+    })
+    .catch((error) => {
+      console.error("Error al realizar la solicitud:", error);
+    });
+  };
+
+  const sendRegisterMessage = (cellId) => {
+      axios
+        .post("http://localhost:8000/api/chat/new", {
+          idCell: cellId,
+          idUser: props.userData.id,
+          nameUser: props.userData.name + " " + props.userData.lastName,
+          message: "Se ha registrado en la celula de seguridad.",
+          date: new Date(),
+          typeMessage: 1,
+        })
+        .then((_) => {
+          console.log("Mensaje de registro enviado");
+        })
+        .catch((error) => {
+          console.error("Error al realizar la solicitud:", error);
+        });
   };
 
   const handleClickOpen = () => {
@@ -661,7 +707,7 @@ const FindCells = (props) => {
                   width: "40%",
                   margin: "10px 5% 10px 5%",
                 }}
-                onClick={() => handleCellClick(cell._id)} 
+                onClick={() => handleCellClick(cell._id)}
               >
                 <CardActionArea>
                   <CardMedia

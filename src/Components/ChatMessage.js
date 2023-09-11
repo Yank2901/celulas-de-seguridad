@@ -51,7 +51,7 @@ const ChatMessage = ({
         marginBottom: "10px",
       }}
     >
-      {!isLogged && (
+      {(!isLogged && code === "0") && (
         <Avatar
           style={{
             backgroundColor: color,

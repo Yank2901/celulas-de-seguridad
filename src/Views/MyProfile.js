@@ -169,10 +169,6 @@ const MyProfile = (props) => {
           </Typography>
         </div>
       ))}
-      <Fab
-      >
-        <AddIcon />
-      </Fab>
     </div>
   );
 };
