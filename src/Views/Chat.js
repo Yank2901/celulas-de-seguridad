@@ -111,17 +111,8 @@ const Chat = (props) => {
     });
 
     socket.on("mensaje-confirmado", (data) => {
-      setCellMessages((prevState) => [
-        ...prevState,
-        {
-          idCell: data.idCell,
-          idUser: data.idUser,
-          nameUser: data.nameUser,
-          message: data.message,
-          date: data.date,
-          typeMessage: data.typeMessage,
-        },
-      ]);
+      console.log("Mensaje confirmado:", data);
+      setCellMessages((cellMessages) => [...cellMessages, data]);
       scrollToBottom();
     });
 
@@ -209,6 +200,7 @@ const Chat = (props) => {
   };
 
   const sendMessage = () => {
+    console.log('sendMessage function called'); // Agrega esto para verificar si se llama correctamente
     let text = message.content.trim();
     if (text !== "") {
       socket.emit("mensaje", {
@@ -219,8 +211,11 @@ const Chat = (props) => {
         date: new Date(),
         typeMessage: message.code,
       });
+
+      setMessage({ ...message, content: "" });
     }
   };
+  
 
   const handleColorChange = (color, code) => {
     setMenuAnchorEl(null);
@@ -437,24 +432,24 @@ const Chat = (props) => {
         </Menu>
 
         <TextField
-          id="standard-multiline-static"
-          label=""
-          multiline
-          maxRows={4}
-          placeholder="Mensaje"
-          variant="standard"
-          InputProps={{
-            style: {
-              color: "black",
-            },
-          }}
-          sx={{
-            flexGrow: 1,
-            margin: "5px 5px 5px 5px",
-          }}
-          value={message.content}
-          onChange={(e) => setMessage({ ...message, content: e.target.value })}
-        />
+  id="standard-multiline-static"
+  label=""
+  multiline
+  maxRows={4}
+  placeholder="Mensaje"
+  variant="standard"
+  InputProps={{
+    style: {
+      color: "black",
+    },
+  }}
+  sx={{
+    flexGrow: 1,
+    margin: "5px 5px 5px 5px",
+  }}
+  value={message.content}
+  onChange={(e) => setMessage({ ...message, content: e.target.value })} 
+/>
 
         <Fab
           variant="extended"
