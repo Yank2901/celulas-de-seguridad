@@ -121,6 +121,7 @@ const MyCells = (props) => {
                     component="img"
                     height="200"
                     image={Images[index % Images.length]}
+                    sx={{ objectFit: "scale-down" }}
                     alt={cell.name}
                   />
                   <CardContent
