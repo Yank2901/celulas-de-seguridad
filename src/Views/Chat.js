@@ -182,21 +182,14 @@ const Chat = (props) => {
   };
 
   const sendExitMessage = () => {
-    axios
-      .post("http://localhost:8000/api/chat/new", {
-        idCell: id,
-        idUser: userId,
-        nameUser: props.userData.name + " " + props.userData.lastName,
-        message: "Se ha retirado de la celula de seguridad.",
-        date: new Date(),
-        typeMessage: 1,
-      })
-      .then((_) => {
-        console.log("Mensaje de salida enviado");
-      })
-      .catch((error) => {
-        console.error("Error al realizar la solicitud:", error);
-      });
+    socket.emit("mensaje", {
+      idCell: id,
+      idUser: userId,
+      nameUser: props.userData.name + " " + props.userData.lastName,
+      message: "Se ha retirado de la celula de seguridad.",
+      date: new Date(),
+      typeMessage: 1,
+    });
   };
 
   const sendMessage = () => {

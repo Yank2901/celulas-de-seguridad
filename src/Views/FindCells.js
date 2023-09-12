@@ -32,6 +32,9 @@ import cell2 from "../Images/cell2.jpg";
 import cell3 from "../Images/cell3.jpg";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import socketIOClient from "socket.io-client";
+
+const socket = socketIOClient("http://localhost:8000");
 
 const FindCells = (props) => {
   const [province, setProvince] = useState("");
@@ -92,20 +95,14 @@ const FindCells = (props) => {
   };
 
   const sendRegisterMessage = (cellId) => {
-      axios
-        .post("http://localhost:8000/api/chat/new", {
+
+        socket.emit("mensaje", {
           idCell: cellId,
           idUser: props.userData.id,
           nameUser: props.userData.name + " " + props.userData.lastName,
           message: "Se ha registrado en la celula de seguridad.",
           date: new Date(),
           typeMessage: 1,
-        })
-        .then((_) => {
-          console.log("Mensaje de registro enviado");
-        })
-        .catch((error) => {
-          console.error("Error al realizar la solicitud:", error);
         });
   };
 
